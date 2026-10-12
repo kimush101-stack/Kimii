@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>קים משחקים — עם קים, כולם משחקים!</title>
+<meta name="description" content="קים משחקים — מופע ילדים אינטראקטיבי של תנועה, אתגרים, צחוק וריקוד. לגנים, קייטנות, מתנ״סים וימי הולדת.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #FFC928;
+    --orange: #FF7A1A;
+    --white: #FFFFFF;
+    --ink: #2B2118;
+    --soft: #FFF6DC;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Rubik", system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--white);
+    line-height: 1.6;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+
+  header.hero {
+    background: radial-gradient(circle at 80% 20%, var(--yellow) 0, var(--yellow) 30%, var(--orange) 100%);
+    color: var(--ink);
+    text-align: center;
+    padding: 56px 0 72px;
+    position: relative;
+    overflow: hidden;
+  }
+  .logo {
+    width: 112px; height: 112px; margin: 0 auto 16px;
+    border-radius: 50%; background: var(--white);
+    display: grid; place-items: center;
+    box-shadow: 0 8px 0 rgba(0,0,0,.12);
+    transform: rotate(-8deg);
+  }
+  .logo span { font-size: 72px; font-weight: 800; color: var(--orange); line-height: 1; }
+  .logo span::after { content: "●"; font-size: 22px; color: var(--yellow); margin-right: 2px; }
+  h1 { font-size: clamp(40px, 9vw, 72px); margin: 0; font-weight: 800; letter-spacing: -1px; }
+  .slogan { font-size: clamp(20px, 4.5vw, 28px); font-weight: 600; margin: 8px 0 28px; }
+  .btn {
+    display: inline-block; text-decoration: none; font-weight: 800; font-size: 18px;
+    padding: 14px 28px; border-radius: 999px; background: var(--ink); color: var(--yellow);
+    box-shadow: 0 5px 0 rgba(0,0,0,.25); transition: transform .1s;
+  }
+  .btn:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(0,0,0,.25); }
+
+  section { padding: 56px 0; }
+  section.alt { background: var(--soft); }
+  h2 { font-size: clamp(26px, 5vw, 36px); margin: 0 0 20px; font-weight: 800; }
+  h2 em { font-style: normal; color: var(--orange); }
+
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .card {
+    background: var(--white); border-radius: 20px; padding: 20px;
+    border: 3px solid var(--yellow);
+  }
+  .card .ico { font-size: 34px; }
+  .card h3 { margin: 6px 0 4px; font-size: 20px; }
+  .card p { margin: 0; }
+
+  .call {
+    text-align: center; font-size: clamp(24px, 6vw, 40px); font-weight: 800;
+  }
+  .call .a { color: var(--orange); }
+  .call .b { display: block; }
+
+  ul.facts { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  ul.facts li::before { content: "★ "; color: var(--orange); }
+
+  footer { background: var(--ink); color: var(--soft); text-align: center; padding: 40px 0; }
+  footer a { color: var(--yellow); }
+  .contact { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 16px 0; }
+  .contact a { background: var(--yellow); color: var(--ink); text-decoration: none; font-weight: 600; padding: 10px 18px; border-radius: 999px; }
+  small { opacity: .75; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="logo" aria-hidden="true"><span>K</span></div>
+    <h1>קים משחקים</h1>
+    <p class="slogan">עם קים — כולם משחקים!</p>
+    <a class="btn" href="#book">להזמנת מופע</a>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>לא רק לצפות — <em>לשחק עם קים!</em></h2>
+    <p>קים היא כוכבת ילדים אנרגטית, מצחיקה וספורטיבית. במופע שלה אין צופים — יש רק שחקנים. 45 דקות של תנועה, אתגרים, צחוק וריקוד, שבהן כל ילד וילדה לוקחים חלק.</p>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <h2>מה יש במופע?</h2>
+    <div class="grid">
+      <div class="card"><div class="ico">🏃</div><h3>משחקים עם קים</h3><p>משחקי תנועה, קפיצות ו״קים אומרת״ — כולם בפנים.</p></div>
+      <div class="card"><div class="ico">🎲</div><h3>אתגר קים</h3><p>מטילים את קוביית קים — וכולם מבצעים את האתגר.</p></div>
+      <div class="card"><div class="ico">😂</div><h3>קים משתגעת</h3><p>אלתור קומי שהילדים עוזרים ״לתקן״.</p></div>
+      <div class="card"><div class="ico">💃</div><h3>הריקוד של קים</h3><p>ריקוד פשוט שכולם יוצאים איתו הביתה.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="call"><span class="a">״עם קים...״</span><span class="b">״כולם משחקים!״</span></p>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <h2>למי זה מתאים?</h2>
+    <ul class="facts">
+      <li>ימי הולדת — ילד/ת השמחה הופכים ל״קפטן של קים״</li>
+      <li>גנים ומוסדות חינוך</li>
+      <li>קייטנות ומתנ״סים</li>
+      <li>אירועי משפחות</li>
+    </ul>
+    <p><small>מופע מותאם לגיל ולקהל · קים מגיעה עם כל הציוד · ניסיון בהדרכת תנועה ומשחק לילדים ובתיאטרון</small></p>
+  </div>
+</section>
+
+<footer id="book">
+  <div class="wrap">
+    <h2>רוצים את קים אצלכם?</h2>
+    <!-- TODO: להחליף בפרטי קשר אמיתיים לפני העלאה -->
+    <div class="contact">
+      <a href="https://wa.me/972XXXXXXXXX">💬 וואטסאפ</a>
+      <a href="tel:+972XXXXXXXXX">📞 טלפון</a>
+      <a href="mailto:hello@example.com">📧 אימייל</a>
+    </div>
+    <p><small>צילום ילדים לפרסום — רק באישור הורים. © קים משחקים</small></p>
+  </div>
+</footer>
+
+</body>
+</html>
