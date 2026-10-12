@@ -1,0 +1,560 @@
+<title>המסלול של קים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;700&display=swap">
+<style>
+/* Layout: one narrow column; a sticky "track" header (stations א–ט) over four tabs: עכשיו / המסלול / שגרות / חומרים */
+:root {
+  --bg: #FFFBF2;
+  --surface: #FFFFFF;
+  --sunk: #FFF1CC;
+  --fg: #2A1F14;
+  --muted: #74624D;
+  --line: #EEDDBB;
+  --sun: #FFC21A;
+  --sun-ink: #2A1F14;
+  --orange: #F2690D;
+  --orange-soft: #FFE2CC;
+  --ok: #1F8A4C;
+  --ok-soft: #DDF3E5;
+  --lock: #B9A88E;
+  --shadow: 0 2px 0 rgba(42,31,20,.08), 0 8px 24px rgba(42,31,20,.06);
+  --display: "Fredoka", "Rubik", system-ui, sans-serif;
+  --body: "Rubik", system-ui, "Segoe UI", Arial, sans-serif;
+  --r: 18px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1A1510; --surface: #251E16; --sunk: #2F2619; --fg: #FBF1DE; --muted: #C2AE90; --line: #3D3122;
+    --sun: #FFC933; --sun-ink: #1A1510; --orange: #FF8A3D; --orange-soft: #43280F; --ok: #5CD08C; --ok-soft: #173524; --lock: #6E5F4A;
+    --shadow: 0 2px 0 rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1A1510; --surface: #251E16; --sunk: #2F2619; --fg: #FBF1DE; --muted: #C2AE90; --line: #3D3122;
+  --sun: #FFC933; --sun-ink: #1A1510; --orange: #FF8A3D; --orange-soft: #43280F; --ok: #5CD08C; --ok-soft: #173524; --lock: #6E5F4A;
+  --shadow: 0 2px 0 rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { direction: rtl; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; margin: 0; }
+.wrap { max-width: 760px; margin: 0 auto; padding-inline: 16px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.2; text-wrap: balance; margin: 0; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; border-radius: 8px; }
+.muted { color: var(--muted); }
+
+/* ---------- header ---------- */
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+.brandrow { display: flex; align-items: center; gap: 12px; padding-block: 12px 6px; }
+.k { width: 40px; height: 40px; flex: none; border-radius: 50%; background: var(--sun); color: var(--orange); display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 26px; transform: rotate(-8deg); }
+.brandrow h1 { font-size: 22px; }
+.brandrow .pct { margin-inline-start: auto; font-family: var(--display); font-weight: 700; font-size: 20px; font-variant-numeric: tabular-nums; }
+.brandrow .pct small { font-family: var(--body); font-weight: 400; font-size: 12px; color: var(--muted); display: block; text-align: left; line-height: 1; }
+.track { display: flex; align-items: center; gap: 0; padding-block: 6px 10px; overflow-x: auto; scrollbar-width: none; }
+.track::-webkit-scrollbar { display: none; }
+.station { flex: none; width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--line); background: var(--surface); display: grid; place-items: center; font-family: var(--display); font-weight: 600; font-size: 15px; color: var(--muted); position: relative; padding: 0; }
+.station.done { background: var(--ok); border-color: var(--ok); color: var(--surface); }
+.station.cur { background: var(--sun); border-color: var(--orange); color: var(--sun-ink); box-shadow: 0 0 0 4px var(--orange-soft); }
+.rail { flex: 1 1 14px; min-width: 10px; height: 4px; background: var(--line); border-radius: 2px; }
+.rail.done { background: var(--ok); }
+nav.tabs { display: flex; gap: 4px; padding-block: 0 8px; }
+nav.tabs button { flex: 1; border: 0; background: transparent; padding: 8px 4px; border-radius: 12px; font-weight: 500; color: var(--muted); }
+nav.tabs button[aria-selected="true"] { background: var(--sun); color: var(--sun-ink); font-weight: 700; }
+
+main { padding-block: 20px 64px; }
+section.view { display: grid; gap: 16px; }
+
+/* ---------- step card ---------- */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); padding: 20px; display: grid; gap: 14px; min-width: 0; }
+.eyebrow { font-size: 13px; letter-spacing: .02em; color: var(--orange); font-weight: 700; }
+.step-title { font-size: clamp(24px, 6vw, 32px); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; background: var(--sunk); border-radius: 999px; padding: 4px 12px; font-size: 14px; }
+.chip.ok { background: var(--ok-soft); color: var(--ok); font-weight: 700; }
+.chip.lock { background: transparent; border: 1px dashed var(--lock); color: var(--muted); }
+.why { font-size: 17px; }
+.label { font-family: var(--display); font-weight: 600; font-size: 17px; }
+ol.actions { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; counter-reset: a; }
+ol.actions li { counter-increment: a; }
+ol.actions label { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; padding: 8px 10px; border-radius: 12px; cursor: pointer; }
+ol.actions label:hover { background: var(--sunk); }
+ol.actions input { appearance: none; width: 24px; height: 24px; margin: 1px 0 0; border-radius: 8px; border: 2px solid var(--line); background: var(--surface); display: grid; place-items: center; cursor: pointer; }
+ol.actions input::before { content: counter(a); font-size: 13px; font-weight: 700; color: var(--muted); }
+ol.actions input:checked { background: var(--ok); border-color: var(--ok); }
+ol.actions input:checked::before { content: "✓"; color: var(--surface); }
+ol.actions input:checked + span { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--lock); }
+.donewhen { background: var(--ok-soft); border-radius: 14px; padding: 12px 14px; }
+.donewhen b { color: var(--ok); }
+.tip { background: var(--orange-soft); border-radius: 14px; padding: 12px 14px; }
+.res { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn { border: 2px solid var(--fg); background: var(--surface); border-radius: 999px; padding: 8px 16px; font-weight: 600; }
+.btn.small { padding: 6px 12px; font-size: 14px; border-width: 1.5px; }
+.btn.primary { background: var(--fg); color: var(--sun); border-color: var(--fg); font-family: var(--display); font-size: 19px; padding: 12px 22px; box-shadow: 0 4px 0 var(--orange); }
+.btn.primary:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--orange); }
+.btn.ghost { border-color: var(--line); }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.row .spacer { flex: 1; }
+textarea { width: 100%; min-height: 80px; resize: vertical; border: 1.5px solid var(--line); border-radius: 12px; padding: 10px 12px; background: var(--bg); color: var(--fg); font: inherit; }
+details.more > summary { cursor: pointer; font-weight: 600; color: var(--muted); list-style: none; }
+details.more > summary::before { content: "＋ "; }
+details.more[open] > summary::before { content: "－ "; }
+.ask-out { white-space: pre-wrap; background: var(--sunk); border-radius: 12px; padding: 12px; }
+.stamp { display: inline-block; font-family: var(--display); font-weight: 700; color: var(--ok); border: 3px solid var(--ok); border-radius: 12px; padding: 2px 12px; transform: rotate(-4deg); }
+@media (prefers-reduced-motion: no-preference) { .stamp.pop { animation: pop .45s ease-out; } }
+@keyframes pop { 0% { transform: scale(1.8) rotate(-12deg); opacity: 0; } 100% { transform: scale(1) rotate(-4deg); opacity: 1; } }
+
+.banner { border-radius: var(--r); padding: 16px 20px; background: var(--sun); color: var(--sun-ink); display: grid; gap: 4px; }
+.banner h2 { font-size: 22px; }
+.focusnote { font-size: 14px; }
+.focusnote button { border: 0; background: none; color: var(--orange); font-weight: 700; padding: 0; text-decoration: underline; }
+
+/* ---------- map ---------- */
+.stage { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+.stage > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 44px 1fr auto; gap: 12px; align-items: center; padding: 14px 16px; }
+.stage > summary::-webkit-details-marker { display: none; }
+.stage .letter { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 22px; background: var(--sunk); }
+.stage.done .letter { background: var(--ok); color: var(--surface); }
+.stage.cur .letter { background: var(--sun); color: var(--sun-ink); }
+.stage h3 { font-size: 19px; }
+.stage .sub { font-size: 13px; color: var(--muted); }
+.stage .count { font-variant-numeric: tabular-nums; font-weight: 700; font-size: 14px; color: var(--muted); }
+.stage-body { padding: 0 16px 16px; display: grid; gap: 10px; }
+.goal { font-size: 15px; }
+.milestone { font-size: 14px; background: var(--sunk); border-radius: 12px; padding: 8px 12px; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.steps button { width: 100%; text-align: start; border: 0; background: transparent; padding: 10px 8px; border-radius: 12px; display: grid; grid-template-columns: 26px 1fr auto; gap: 10px; align-items: center; }
+.steps button:hover { background: var(--sunk); }
+.dot { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; font-size: 12px; font-weight: 700; }
+.s-done .dot { background: var(--ok); border-color: var(--ok); color: var(--surface); }
+.s-next .dot { background: var(--sun); border-color: var(--orange); }
+.s-open .dot { border-color: var(--orange); }
+.s-lock .dot { border-style: dashed; border-color: var(--lock); }
+.s-done .t { color: var(--muted); }
+.s-lock .t { color: var(--muted); }
+.steps .time { font-size: 13px; color: var(--muted); white-space: nowrap; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend .dot { width: 16px; height: 16px; }
+
+/* ---------- routines ---------- */
+.routine { display: grid; gap: 8px; }
+.routine h3 { font-size: 19px; }
+.routine ul { margin: 0; padding-inline-start: 20px; }
+.routine.off { opacity: .65; }
+
+/* ---------- library / reader ---------- */
+.doclist { display: grid; gap: 8px; }
+.doclist button { text-align: start; border: 1px solid var(--line); background: var(--surface); border-radius: 14px; padding: 12px 14px; display: grid; gap: 2px; }
+.doclist button:hover { border-color: var(--orange); }
+.doclist b { font-family: var(--display); font-size: 17px; font-weight: 600; }
+.doclist small { color: var(--muted); direction: ltr; text-align: right; }
+.reader { min-width: 0; }
+.md { min-width: 0; overflow-wrap: anywhere; }
+.md h1 { font-size: 28px; margin: .2em 0 .6em; }
+.md h2 { font-size: 22px; margin: 1.4em 0 .5em; padding-top: .6em; border-top: 2px dashed var(--line); }
+.md h3 { font-size: 18px; margin: 1.2em 0 .4em; }
+.md p, .md li { max-width: 68ch; }
+.md a { color: var(--orange); }
+.md blockquote { margin: 1em 0; padding: 10px 14px; background: var(--sunk); border-radius: 12px; border: 0; }
+.md code { background: var(--sunk); border-radius: 6px; padding: 1px 6px; font-size: .92em; }
+.md pre { background: var(--sunk); border-radius: 12px; padding: 12px; overflow-x: auto; direction: ltr; text-align: left; }
+.md .tbl { overflow-x: auto; margin: 1em 0; }
+.md table { border-collapse: collapse; min-width: 100%; font-size: 15px; }
+.md th, .md td { border: 1px solid var(--line); padding: 6px 10px; text-align: start; vertical-align: top; }
+.md th { background: var(--sunk); font-weight: 700; }
+.md ul.contains-task-list, .md li.task-list-item { list-style: none; }
+.md input[type=checkbox] { margin-inline-end: 6px; }
+.md hr { border: 0; border-top: 2px dashed var(--line); margin: 2em 0; }
+
+.store { font-size: 12px; color: var(--muted); text-align: center; padding-block: 12px; }
+.empty { text-align: center; padding: 32px 16px; color: var(--muted); }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brandrow">
+      <div class="k" aria-hidden="true">K</div>
+      <h1>המסלול של קים</h1>
+      <div class="pct" id="pct" aria-live="polite">0%<small>מהמסלול</small></div>
+    </div>
+    <div class="track" id="track" aria-label="תחנות המסלול"></div>
+    <nav class="tabs" role="tablist" aria-label="תצוגות">
+      <button role="tab" id="tab-now" data-view="now" aria-selected="true">עכשיו</button>
+      <button role="tab" id="tab-map" data-view="map" aria-selected="false">כל המסלול</button>
+      <button role="tab" id="tab-routines" data-view="routines" aria-selected="false">שגרות</button>
+      <button role="tab" id="tab-library" data-view="library" aria-selected="false">חומרים</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="view" id="view-now"></section>
+  <section class="view" id="view-map" hidden></section>
+  <section class="view" id="view-routines" hidden></section>
+  <section class="view" id="view-library" hidden></section>
+  <p class="store" id="store">ההתקדמות נשמרת בדפדפן הזה</p>
+</main>
+
+<script>
+const DATA = /*__DATA__*/null;
+const LETTERS = ["א","ב","ג","ד","ה","ו","ז","ח","ט","י","כ","ל"];
+const STAGES = DATA.roadmap.stages;
+const ROUTINES = DATA.roadmap.routines || [];
+const DOCS = DATA.docs;
+const STEPS = [];
+STAGES.forEach((st, si) => st.steps.forEach((s, i) => STEPS.push(Object.assign({}, s, { si, idx: i }))));
+const BY_ID = Object.fromEntries(STEPS.map(s => [s.id, s]));
+const LS_KEY = "kim-path-v1";
+
+let state = { done: {}, acts: {}, notes: {} };
+let view = "now";
+let focusId = null;
+let readerPath = null, readerBack = null;
+
+/* ---------- small DOM helper ---------- */
+function h(tag, attrs, ...kids) {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v == null || v === false) continue;
+    if (k === "class") el.className = v;
+    else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+    else if (k === "html") el.innerHTML = v;
+    else el.setAttribute(k, v === true ? "" : v);
+  }
+  for (const kid of kids.flat()) if (kid != null && kid !== false) el.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
+  return el;
+}
+
+/* ---------- progress logic ---------- */
+const isDone = id => !!state.done[id];
+const depsMet = s => (s.depends_on || []).every(d => !BY_ID[d] || isDone(d));
+function status(s) { if (isDone(s.id)) return "done"; return depsMet(s) ? "open" : "lock"; }
+function nextStep() { return STEPS.find(s => !isDone(s.id) && depsMet(s)) || STEPS.find(s => !isDone(s.id)) || null; }
+function stageDone(si) { return STAGES[si].steps.every(s => isDone(s.id)); }
+function curStage() { const n = nextStep(); return n ? n.si : STAGES.length; }
+function pct() { return STEPS.length ? Math.round(100 * STEPS.filter(s => isDone(s.id)).length / STEPS.length) : 0; }
+
+/* ---------- persistence: account (db) when available, browser as fallback ---------- */
+let docRef = null, saving = false, dirty = false, saveTimer = null, pendingLocal = false;
+function loadLocal() { try { const raw = localStorage.getItem(LS_KEY); if (raw) state = normalize(JSON.parse(raw)); } catch (e) {} }
+function saveLocal() { try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {} }
+function normalize(o) { return { done: Object.assign({}, o && o.done), acts: Object.assign({}, o && o.acts), notes: Object.assign({}, o && o.notes) }; }
+function scheduleSave() { saveLocal(); if (!docRef) return; pendingLocal = true; clearTimeout(saveTimer); saveTimer = setTimeout(flush, 700); }
+async function flush() {
+  if (!docRef) return;
+  if (saving) { dirty = true; return; }
+  saving = true; dirty = false;
+  try { await docRef.set(JSON.parse(JSON.stringify(state))); }
+  catch (e) { if (e && (e.code === "invalid_argument" || e.code === "revoked")) { docRef = null; setStore("local"); } }
+  saving = false;
+  if (dirty) flush(); else pendingLocal = false;
+}
+function mergeStates(a, b) {
+  const out = normalize(a);
+  for (const [k, v] of Object.entries(b.done)) if (!out.done[k]) out.done[k] = v;
+  for (const [k, v] of Object.entries(b.acts)) out.acts[k] = Array.from(new Set([...(out.acts[k] || []), ...v]));
+  for (const [k, v] of Object.entries(b.notes)) if (!out.notes[k]) out.notes[k] = v;
+  return out;
+}
+function setStore(mode) {
+  document.getElementById("store").textContent = mode === "db"
+    ? "ההתקדמות נשמרת בחשבון שלך ומסתנכרנת בין המכשירים"
+    : "ההתקדמות נשמרת בדפדפן הזה בלבד";
+}
+async function initStore() {
+  if (!window.claude || !window.claude.use) return;
+  const [db, user] = await Promise.all([claude.use("db"), claude.use("user")]);
+  if (!db || !user) return;
+  const uid = await user.id();
+  if (!uid) return;
+  const ref = db.doc("data/users/" + uid + "/progress");
+  let first = true;
+  ref.onSnapshot(snap => {
+    if (snap.metadata.hasPendingWrites) return;
+    const remote = snap.exists ? normalize(snap.data()) : normalize({});
+    if (first) {
+      first = false;
+      const merged = mergeStates(remote, state);
+      const changed = JSON.stringify(merged) !== JSON.stringify(remote);
+      state = merged; docRef = ref; setStore("db"); saveLocal(); render();
+      if (changed) flush();
+    } else if (!saving && !pendingLocal && JSON.stringify(remote) !== JSON.stringify(state)) { state = remote; saveLocal(); render(); }
+  }, () => { docRef = null; setStore("local"); });
+}
+
+/* ---------- actions ---------- */
+function toggleAct(id, i, on) {
+  const set = new Set(state.acts[id] || []);
+  on ? set.add(i) : set.delete(i);
+  state.acts[id] = Array.from(set).sort((a, b) => a - b);
+  scheduleSave();
+}
+let justDone = null;
+function markDone(id) {
+  state.done[id] = new Date().toISOString().slice(0, 10);
+  justDone = id; focusId = null;
+  scheduleSave(); render(); scrollTop();
+}
+function undo(id) { delete state.done[id]; focusId = id; scheduleSave(); render(); }
+let noteTimer = null;
+function setNote(id, v) { pendingLocal = !!docRef; clearTimeout(noteTimer); noteTimer = setTimeout(() => { if (v.trim()) state.notes[id] = v; else delete state.notes[id]; scheduleSave(); }, 500); }
+function scrollTop() { window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); }
+function go(v) { view = v; render(); scrollTop(); }
+function openStep(id) { focusId = id; justDone = null; go("now"); }
+function openDoc(path, back) { if (!DOCS[path]) return; readerPath = path; readerBack = back || null; go("library"); }
+
+/* ---------- header ---------- */
+function renderHeader() {
+  const p = pct();
+  const pctEl = document.getElementById("pct");
+  pctEl.firstChild.textContent = p + "%";
+  const track = document.getElementById("track");
+  track.replaceChildren();
+  const cs = curStage();
+  STAGES.forEach((st, si) => {
+    if (si) track.append(h("span", { class: "rail" + (stageDone(si - 1) ? " done" : "") }));
+    const cls = stageDone(si) ? "done" : si === cs ? "cur" : "";
+    track.append(h("button", { class: "station " + cls, title: st.title, "aria-label": "שלב " + LETTERS[si] + ": " + st.title,
+      onclick: () => { mapOpen = si; go("map"); } }, LETTERS[si]));
+  });
+  document.querySelectorAll("nav.tabs button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.view === view)));
+  for (const v of ["now", "map", "routines", "library"]) document.getElementById("view-" + v).hidden = v !== view;
+}
+
+/* ---------- NOW ---------- */
+function renderNow() {
+  const root = document.getElementById("view-now");
+  root.replaceChildren();
+  const next = nextStep();
+  if (!next && !focusId) {
+    root.append(h("div", { class: "banner" }, h("h2", {}, "עברת את כל המסלול!"),
+      h("div", {}, "עם קים — כולם משחקים! עכשיו זה הזמן לשגרות ולשלב הבא.")));
+    return;
+  }
+  if (justDone && BY_ID[justDone]) {
+    const d = BY_ID[justDone];
+    const finishedStage = stageDone(d.si);
+    root.append(h("div", { class: "banner" },
+      h("div", {}, h("span", { class: "stamp pop" }, "בוצע ✓")),
+      finishedStage
+        ? [h("h2", {}, "סיימת את שלב " + LETTERS[d.si] + ": " + STAGES[d.si].title + "!"), STAGES[d.si].milestone ? h("div", {}, STAGES[d.si].milestone) : null]
+        : h("div", {}, "״" + d.title + "״ מאחורייך. הנה הצעד הבא:")));
+  }
+  const s = focusId && BY_ID[focusId] ? BY_ID[focusId] : next;
+  if (s !== next && next) {
+    root.append(h("p", { class: "focusnote muted" }, "את מסתכלת על צעד מתוך המסלול. ",
+      h("button", { onclick: () => { focusId = null; justDone = null; render(); } }, "חזרה לצעד הבא שלי ←")));
+  }
+  root.append(stepCard(s, s === next));
+}
+
+function stepCard(s, isNext) {
+  const st = status(s);
+  const stage = STAGES[s.si];
+  const acts = new Set(state.acts[s.id] || []);
+  const card = h("article", { class: "card", "aria-labelledby": "st-" + s.id });
+  card.append(h("div", { class: "eyebrow" }, "שלב " + LETTERS[s.si] + " · " + stage.title + " · צעד " + (s.idx + 1) + " מתוך " + stage.steps.length));
+  card.append(h("h2", { class: "step-title", id: "st-" + s.id }, s.title));
+  const chips = h("div", { class: "chips" },
+    s.time ? h("span", { class: "chip" }, "⏱ " + s.time) : null,
+    s.cost ? h("span", { class: "chip" }, "₪ " + s.cost) : null,
+    st === "done" ? h("span", { class: "chip ok" }, "בוצע " + fmtDate(state.done[s.id])) : null,
+    st === "lock" ? h("span", { class: "chip lock" }, "עדיף אחרי: " + (s.depends_on || []).filter(d => BY_ID[d] && !isDone(d)).map(d => BY_ID[d].title).join(", ")) : null);
+  card.append(chips);
+  if (s.why) card.append(h("p", { class: "why" }, s.why));
+
+  card.append(h("div", { class: "label" }, "מה עושים"));
+  const ol = h("ol", { class: "actions" });
+  (s.actions || []).forEach((a, i) => {
+    const id = "a-" + s.id + "-" + i;
+    ol.append(h("li", {}, h("label", { for: id },
+      h("input", { type: "checkbox", id, checked: acts.has(i), onchange: e => toggleAct(s.id, i, e.target.checked) }),
+      h("span", {}, a))));
+  });
+  card.append(ol);
+
+  if (s.done_when) card.append(h("div", { class: "donewhen" }, h("b", {}, "תדעי שסיימת כש: "), s.done_when));
+  if (s.tip) card.append(h("div", { class: "tip" }, h("b", {}, "טיפ: "), s.tip));
+
+  const res = (s.resources || []).filter(r => r && r.file);
+  if (res.length) {
+    card.append(h("div", { class: "label" }, "חומרים לצעד הזה"));
+    card.append(h("div", { class: "res" }, res.map(r => DOCS[r.file]
+      ? h("button", { class: "btn small", onclick: () => openDoc(r.file, s.id) }, "📄 " + r.label)
+      : h("span", { class: "chip" }, "📄 " + r.label + " (" + r.file + ")"))));
+  }
+
+  const notes = h("details", { class: "more", open: !!state.notes[s.id] },
+    h("summary", {}, "הערות שלי לצעד הזה"),
+    h("textarea", { id: "note-" + s.id, placeholder: "מה למדתי, למי פניתי, מה נשאר…", oninput: e => setNote(s.id, e.target.value) }));
+  notes.querySelector("textarea").value = state.notes[s.id] || "";
+  card.append(notes);
+
+  if (sampleFn) card.append(askBox(s));
+
+  const row = h("div", { class: "row" });
+  if (st === "done") row.append(h("button", { class: "btn ghost", onclick: () => undo(s.id) }, "סמני כלא בוצע"));
+  else row.append(h("button", { class: "btn primary", onclick: () => markDone(s.id) }, "סיימתי את הצעד ✓"));
+  row.append(h("span", { class: "spacer" }));
+  const gi = STEPS.indexOf(s);
+  if (gi > 0) row.append(h("button", { class: "btn small ghost", onclick: () => openStep(STEPS[gi - 1].id) }, "→ הקודם"));
+  if (gi < STEPS.length - 1) row.append(h("button", { class: "btn small ghost", onclick: () => openStep(STEPS[gi + 1].id) }, "הבא ←"));
+  card.append(row);
+  return card;
+}
+
+function fmtDate(iso) { if (!iso) return ""; const [y, m, d] = iso.split("-"); return d + "." + m + "." + y.slice(2); }
+
+/* ---------- Ask Claude about a step (optional, only where the viewer allows it) ---------- */
+let sampleFn = null, askCtl = null;
+function askBox(s) {
+  const out = h("div", { class: "ask-out", hidden: true, "aria-live": "polite" });
+  const ta = h("textarea", { id: "ask-" + s.id, placeholder: "למשל: איך אני מוצאת גננות לפנות אליהן באזור שלי?" });
+  const btn = h("button", { class: "btn small" }, "שאלי");
+  const stop = h("button", { class: "btn small ghost", hidden: true }, "עצרי");
+  stop.onclick = () => askCtl && askCtl.abort();
+  btn.onclick = async () => {
+    const q = ta.value.trim();
+    if (!q) { ta.focus(); return; }
+    askCtl = new AbortController();
+    btn.disabled = true; stop.hidden = false; out.hidden = false; out.textContent = "חושבת…";
+    const prompt = [
+      "את עוזרת אישית של קים נידם, שמקימה את ״קים משחקים״: דמות כוכבת ילדים אנרגטית וספורטיבית בישראל שמובילה ילדים למשחק, תנועה וצחוק. סלוגן: ״עם קים — כולם משחקים!״.",
+      "קים עובדת לפי מסלול צעדים. זה הצעד שהיא נמצאת בו עכשיו:",
+      JSON.stringify({ stage: STAGES[s.si].title, title: s.title, why: s.why, actions: s.actions, done_when: s.done_when }),
+      "השאלה של קים: " + q,
+      "עני בעברית טבעית, בגוף שני נקבה, קצר ומעשי (עד 150 מילים), עם צעדים ממוספרים אם מתאים. אל תמציאי מחירים, חוקים או עובדות כוודאיים; אם צריך לבדוק משהו, כתבי ״לבדוק״ ואיפה."
+    ].join("\n\n");
+    try {
+      await sampleFn(prompt, { signal: askCtl.signal, cache: false, onText: ({ text }) => { out.textContent = text; } });
+    } catch (e) {
+      if (e && e.code === "cancelled") { out.textContent = e.text || ""; if (!e.text) out.hidden = true; }
+      else if (e && (e.code === "not_granted" || e.code === "sampling_disabled" || e.code === "not_declared" || e.code === "capability_disabled" || e.code === "capability_removed")) { sampleFn = null; box.remove(); }
+      else if (e && e.code === "rate_limited") out.textContent = (e.text ? e.text + "\n\n" : "") + "יותר מדי שאלות ברגע אחד. נסי שוב עוד מעט.";
+      else out.textContent = (e && e.text ? e.text + "\n\n" : "") + "התשובה נקטעה. אפשר לנסות שוב.";
+    }
+    btn.disabled = false; stop.hidden = true;
+  };
+  const box = h("details", { class: "more" }, h("summary", {}, "תקועה? שאלי את Claude על הצעד הזה"),
+    h("div", { style: "display:grid;gap:8px;margin-top:8px" }, ta, h("div", { class: "row" }, btn, stop), out));
+  return box;
+}
+
+/* ---------- MAP ---------- */
+let mapOpen = null;
+function renderMap() {
+  const root = document.getElementById("view-map");
+  root.replaceChildren();
+  root.append(h("div", { class: "legend" },
+    h("span", { class: "s-done" }, h("i", { class: "dot" }, "✓"), "בוצע"),
+    h("span", { class: "s-next" }, h("i", { class: "dot" }), "הצעד הבא"),
+    h("span", { class: "s-open" }, h("i", { class: "dot" }), "פתוח"),
+    h("span", { class: "s-lock" }, h("i", { class: "dot" }), "מחכה לצעד קודם")));
+  const next = nextStep();
+  const cs = curStage();
+  STAGES.forEach((st, si) => {
+    const doneN = st.steps.filter(s => isDone(s.id)).length;
+    const cls = stageDone(si) ? "done" : si === cs ? "cur" : "";
+    const open = mapOpen != null ? mapOpen === si : si === cs;
+    const det = h("details", { class: "stage " + cls, open, id: "stage-" + st.id },
+      h("summary", {},
+        h("span", { class: "letter" }, LETTERS[si]),
+        h("span", {}, h("h3", {}, st.title), h("span", { class: "sub" }, st.week_hint || "")),
+        h("span", { class: "count" }, doneN + "/" + st.steps.length)));
+    const body = h("div", { class: "stage-body" });
+    if (st.goal) body.append(h("p", { class: "goal", style: "margin:0" }, st.goal));
+    const ul = h("ul", { class: "steps" });
+    STEPS.filter(s => s.si === si).forEach(s => {
+      const k = isDone(s.id) ? "s-done" : s === next ? "s-next" : depsMet(s) ? "s-open" : "s-lock";
+      ul.append(h("li", { class: k }, h("button", { onclick: () => openStep(s.id) },
+        h("span", { class: "dot" }, isDone(s.id) ? "✓" : ""),
+        h("span", { class: "t" }, s.title),
+        h("span", { class: "time" }, s.time || ""))));
+    });
+    body.append(ul);
+    if (st.milestone) body.append(h("div", { class: "milestone" }, h("b", {}, "בסוף השלב: "), st.milestone));
+    det.append(body);
+    root.append(det);
+  });
+  if (mapOpen != null) { const el = document.getElementById("stage-" + STAGES[mapOpen].id); mapOpen = null; if (el) requestAnimationFrame(() => el.scrollIntoView({ block: "start" })); }
+}
+
+/* ---------- ROUTINES ---------- */
+function renderRoutines() {
+  const root = document.getElementById("view-routines");
+  root.replaceChildren();
+  root.append(h("p", { class: "muted", style: "margin:0" }, "הרגלים קבועים שמחזיקים את העסק בתנועה. כל שגרה נפתחת אחרי צעד מסוים במסלול."));
+  if (!ROUTINES.length) { root.append(h("div", { class: "empty" }, "אין עדיין שגרות.")); return; }
+  ROUTINES.forEach(r => {
+    const after = r.starts_after && BY_ID[r.starts_after];
+    const active = !after || isDone(after.id);
+    root.append(h("article", { class: "card routine" + (active ? "" : " off") },
+      h("div", { class: "chips" }, h("span", { class: "chip" + (active ? " ok" : "") }, active ? "פעילה" : "עוד לא"), h("span", { class: "chip" }, "🔁 " + r.frequency)),
+      h("h3", {}, r.title),
+      h("ul", {}, (r.actions || []).map(a => h("li", {}, a))),
+      after ? h("div", { class: "muted", style: "font-size:14px" }, "מתחילה אחרי: ",
+        h("button", { class: "btn small ghost", onclick: () => openStep(after.id) }, after.title)) : null));
+  });
+}
+
+/* ---------- LIBRARY ---------- */
+function docTitle(path) { const m = /^#\s+(.+)$/m.exec(DOCS[path].md || ""); return m ? m[1].replace(/[*_`]/g, "") : path; }
+function resolveLink(base, href) {
+  if (!href || /^(https?:|mailto:|tel:|#)/.test(href)) return null;
+  const [p, hash] = href.split("#");
+  const parts = base.split("/").slice(0, -1);
+  for (const seg of p.split("/")) { if (seg === "..") parts.pop(); else if (seg && seg !== ".") parts.push(seg); }
+  const full = parts.join("/");
+  return DOCS[full] ? { path: full, hash } : null;
+}
+function renderLibrary() {
+  const root = document.getElementById("view-library");
+  root.replaceChildren();
+  if (readerPath && DOCS[readerPath]) {
+    const row = h("div", { class: "row" });
+    if (readerBack && BY_ID[readerBack]) row.append(h("button", { class: "btn small", onclick: () => { const b = readerBack; readerPath = null; readerBack = null; openStep(b); } }, "→ חזרה לצעד: " + BY_ID[readerBack].title));
+    row.append(h("button", { class: "btn small ghost", onclick: () => { readerPath = null; readerBack = null; render(); scrollTop(); } }, "כל החומרים"));
+    root.append(row);
+    const md = h("div", { class: "md" });
+    md.innerHTML = DOCS[readerPath].html || "";
+    md.querySelectorAll("table").forEach(t => { const w = h("div", { class: "tbl" }); t.replaceWith(w); w.append(t); });
+    md.querySelectorAll("a[href]").forEach(a => {
+      const target = resolveLink(readerPath, a.getAttribute("href"));
+      if (target) a.addEventListener("click", e => { e.preventDefault(); openDoc(target.path, readerBack); });
+      else if (/^https?:/.test(a.getAttribute("href"))) { a.target = "_blank"; a.rel = "noopener"; }
+    });
+    md.querySelectorAll("input[type=checkbox]").forEach(c => c.disabled = true);
+    root.append(h("article", { class: "card reader" }, md));
+    return;
+  }
+  root.append(h("p", { class: "muted", style: "margin:0" }, "כל התסריטים, הטפסים והתבניות של קים משחקים. כל צעד במסלול מקשר לחומרים שהוא צריך."));
+  const list = h("div", { class: "doclist" });
+  Object.keys(DOCS).forEach(p => list.append(h("button", { onclick: () => openDoc(p) }, h("b", {}, docTitle(p)), h("small", {}, p))));
+  root.append(list);
+}
+
+/* ---------- render ---------- */
+function render() {
+  renderHeader();
+  if (view === "now") renderNow();
+  if (view === "map") renderMap();
+  if (view === "routines") renderRoutines();
+  if (view === "library") renderLibrary();
+}
+document.querySelectorAll("nav.tabs button").forEach(b => b.addEventListener("click", () => {
+  if (b.dataset.view === "now") { focusId = null; justDone = null; }
+  if (b.dataset.view === "library") { readerPath = null; readerBack = null; }
+  go(b.dataset.view);
+}));
+const startHash = (location.hash || "").slice(1);
+if (["now", "map", "routines", "library"].includes(startHash)) view = startHash;
+loadLocal();
+render();
+initStore();
+if (window.claude && window.claude.use) claude.use("sample").then(fn => { if (fn) { sampleFn = fn; if (view === "now") renderNow(); } });
+</script>
