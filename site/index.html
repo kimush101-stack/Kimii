@@ -6,17 +6,28 @@
   עמוד הנחיתה של "קים משחקים" — קובץ אחד, בלי ספריות.
 
   לפני שמעלים לאוויר (הרשימה המלאה: docs/15-costume-and-logo.md, פרק 10):
-  [ ] פרטי קשר: לערוך רק את CONFIG בתחתית הקובץ (וואטסאפ, טלפון, מייל, אינסטגרם)
-  [ ] טווח גילים 3–8: לאשר אחרי הפיילוט (מופיע בכותרת ובשאלות הנפוצות)
+  [ ] פרטי קשר: לערוך רק את CONFIG בתחתית הקובץ (וואטסאפ, טלפון, מייל, אינסטגרם).
+      אין לך אינסטגרם או מייל של העסק? מוחקים את הכפתור המתאים בתחתית העמוד.
+  [ ] טווח גילים 3–8: לאשר אחרי הפיילוט (בכותרת ובשאלות הנפוצות)
+  [ ] מספר ילדים מקסימלי: 25 עד שיש מגבר (docs/06-show-offer.md). לאשר (בשאלות הנפוצות)
   [ ] אזורי פעילות (בשאלות הנפוצות)
-  [ ] תמונה של קים בתלבושת — בלי ילדים (באזור "נעים מאוד, אני קים")
-  [ ] פרטים אמיתיים על הניסיון של קים (באותו אזור) — רק מה שנכון
-  [ ] המלצות — רק אמיתיות, עם אישור בכתב. אם אין עדיין: למחוק את הכרטיסים המסומנים
-  [ ] og:image ו־og:url (למטה, בתוך <head>) — לתצוגה יפה כששולחים את הקישור בוואטסאפ
-  [ ] אחרי שיש לוגו סופי: להחליף את הלוגו הזמני (K בעיגול) בקובץ הלוגו
+  [ ] תמונה של קים בתלבושת, בלי ילדים (באזור "נעים מאוד, אני קים")
+  [ ] פרטים אמיתיים על הניסיון של קים (באותו אזור). רק מה שנכון
+  [ ] תמונה וכתובת לשיתוף (og:image ו־og:url, למעלה בתוך <head>), לתצוגה יפה כששולחים את הקישור בוואטסאפ
+  [ ] חובת נגישות והצהרת נגישות (בתחתית העמוד)
 
-  כל מקום שעוד צריך להחליף מסומן ב־data-todo, ומופיע בעמוד במסגרת אדומה מקווקוות.
-  כל עוד נשאר משהו להחליף — מופיע למעלה פס אדום "טיוטה". כשהכל מוחלף — הפס נעלם לבד.
+  לא חוסם העלאה, עושים כשיש:
+  [ ] המלצות: האזור מוסתר (hidden) עד שיש לפחות 2 המלצות אמיתיות עם אישור בכתב (docs/08-consent-template.md, נוסח ה׳)
+  [ ] לוגו סופי: להחליף את הלוגו הזמני (K בעיגול צהוב) בקובץ הלוגו
+  [ ] סרטון ההיכרות, ואישורים (משטרה, ביטוח, עזרה ראשונה): להפעיל רק כשיש בפועל
+
+  איך יודעים מה עוד נשאר:
+  1. מקום בעמוד שצריך להחליף או לאשר מסומן ב־data-todo, ומופיע במסגרת אדומה מקווקוות.
+     אחרי שהחלפת או אישרת: מוחקים מהתגית את המילה data-todo.
+  2. דבר שלא רואים בעמוד (למשל בתוך <head>) מסומן בהערה שמתחילה במילה TODO ואחריה נקודתיים.
+     אחרי שטיפלת בו: מוחקים את ההערה כולה.
+  3. הפס האדום "טיוטה" בראש העמוד סופר את כל אלה: מסגרות אדומות, פרטי קשר שלא הוחלפו והערות TODO.
+     ובכל זאת, לפני העלאה: חפשי בקובץ (Ctrl+F) את TODO עם נקודתיים, וודאי שלא נשאר אף אחד.
   ============================================================
 -->
 <meta charset="utf-8">
@@ -31,12 +42,15 @@
 <meta property="og:locale" content="he_IL">
 <meta property="og:title" content="קים משחקים — עם קים, כולם משחקים!">
 <meta property="og:description" content="מופע משחק ותנועה אינטראקטיבי לילדים. אין צופים — יש רק שחקנים.">
-<!-- TODO: כשהאתר באוויר — להוסיף תמונה של קים (רוחב 1200 פיקסלים, בלי ילדים) ואת כתובת האתר:
+<!-- TODO: תמונה וכתובת לשיתוף (og:image, og:url). כשיש כתובת לאתר (docs/15-costume-and-logo.md, פרק 10):
+     מעלים תמונה של קים ברוחב 1200 פיקסלים (בלי ילדים) לאותה תיקייה, מחליפים את YOUR-DOMAIN בכתובת האמיתית
+     בשתי השורות שבהערה הבאה, מוציאים אותן מההערה, ומוחקים את ההערה הזאת. -->
+<!--
 <meta property="og:image" content="https://YOUR-DOMAIN/kim-1200.jpg">
 <meta property="og:url" content="https://YOUR-DOMAIN/">
 -->
 
-<!-- אייקון זמני בלשונית הדפדפן: K כתומה על עיגול צהוב. להחליף אחרי שיש לוגו סופי -->
+<!-- אייקון זמני בלשונית הדפדפן: K בצבע דיו על עיגול צהוב, עם נקודה כתומה. זה אותו לוגו זמני שבראש העמוד. להחליף אחרי שיש לוגו סופי -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23FFC928'/%3E%3Ctext x='32' y='46' font-family='Arial,sans-serif' font-weight='900' font-size='40' text-anchor='middle' fill='%232B2118'%3EK%3C/text%3E%3Ccircle cx='50' cy='16' r='7' fill='%23FF7A1A'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,7 +67,7 @@
     --ink: #2B2118;           /* כל הטקסט */
     --ink-soft: #5C4A3A;      /* טקסט משני */
     --cream: #FFF6DC;
-    --todo: #B00020;
+    --draft: #B00020;         /* סימון טיוטה בלבד */
     --radius: 20px;
   }
 
@@ -84,16 +98,17 @@
   /* ---------- פס "טיוטה" — מופיע רק אם נשארו דברים להחליף ---------- */
   .draft-bar {
     display: none; position: sticky; top: 0; z-index: 40;
-    background: var(--todo); color: var(--white);
+    background: var(--draft); color: var(--white);
     font-size: 15px; font-weight: 600; text-align: center; padding: 8px 16px;
   }
   .draft-bar.show { display: block; }
 
-  /* סימון של מקום שצריך להחליף */
+  /* סימון של מקום שצריך להחליף או לאשר */
   [data-todo] {
-    outline: 3px dashed var(--todo); outline-offset: 4px;
-    background: #FFF0F0; color: var(--todo); border-radius: 12px;
+    outline: 3px dashed var(--draft); outline-offset: 4px;
+    background: #FFF0F0; color: var(--draft); border-radius: 12px;
   }
+  span[data-todo] { padding: 0 6px; border-radius: 6px; outline-offset: 2px; }
 
   /* ---------- כותרת ראשית ---------- */
   .hero {
@@ -102,15 +117,20 @@
     padding: 40px 0 56px;
     overflow: hidden;
   }
+  /* לוגו זמני: K בצבע דיו על עיגול צהוב עם נקודה כתומה (כמו האייקון בלשונית). המסגרת הלבנה מפרידה אותו מהרקע הצהוב */
   .logo {
+    position: relative;
     width: 104px; height: 104px; margin: 0 auto 14px;
-    border-radius: 50%; background: var(--white);
+    border-radius: 50%; background: var(--yellow); border: 4px solid var(--white);
     display: grid; place-items: center;
     box-shadow: 0 7px 0 rgba(43,33,24,.14);
     transform: rotate(-8deg);
   }
-  .logo span { font-size: 68px; font-weight: 800; color: var(--orange); line-height: 1; }
-  .logo span::after { content: "●"; font-size: 20px; color: var(--yellow); margin-inline-start: 2px; }
+  .logo span { font-size: 64px; font-weight: 800; color: var(--ink); line-height: 1; }
+  .logo::after {
+    content: ""; position: absolute; top: 13%; right: 13%;
+    width: 20%; height: 20%; border-radius: 50%; background: var(--orange);
+  }
   h1 { font-size: clamp(40px, 11vw, 76px); line-height: 1.05; margin: 0; font-weight: 800; letter-spacing: -1px; }
   .slogan { font-size: clamp(21px, 5.5vw, 30px); font-weight: 600; margin: 10px 0 6px; }
   .lead { font-size: clamp(17px, 4vw, 20px); max-width: 560px; margin: 0 auto 24px; }
@@ -224,6 +244,11 @@
     padding: 12px; border-radius: 999px;
   }
 
+  /* כפתור קשר שעוד לא הוחלף ב־CONFIG: אדום, ולא לחיץ */
+  .contact a[data-todo], .sticky-cta a[data-todo] {
+    background: #FFF0F0; color: var(--draft); cursor: not-allowed; border-radius: 999px;
+  }
+
   /* ---------- מסכים גדולים ---------- */
   @media (min-width: 520px) {
     .grid.two { grid-template-columns: repeat(2, 1fr); }
@@ -234,7 +259,7 @@
     .sticky-cta { display: none; }
     .hero { padding: 64px 0 80px; }
     .logo { width: 120px; height: 120px; }
-    .logo span { font-size: 78px; }
+    .logo span { font-size: 74px; }
     section { padding: 72px 0; }
     .grid.three { grid-template-columns: repeat(3, 1fr); }
     .steps { grid-template-columns: repeat(3, 1fr); }
@@ -255,19 +280,19 @@
 
 <header class="hero">
   <div class="wrap">
-    <!-- לוגו זמני. אחרי שיש לוגו סופי: להחליף את ה־div הזה בתמונת הלוגו (<img src="logo.svg" alt="קים משחקים">) -->
+    <!-- לוגו זמני (לא חוסם העלאה). אחרי שיש לוגו סופי: להחליף את ה־div הזה בתמונת הלוגו, למשל <img src="logo.svg" alt="קים משחקים" width="120" height="120"> -->
     <div class="logo" aria-hidden="true"><span>K</span></div>
     <h1>קים משחקים</h1>
     <p class="slogan">עם קים — כולם משחקים!</p>
     <p class="lead">מופע משחק ותנועה לילדים, שבו אין צופים — יש רק שחקנים. קופצים, קופאים, צוחקים ורוקדים עם קים.</p>
     <div class="cta-row">
       <a class="btn" href="#book">להזמנת מופע</a>
-      <a class="btn ghost" href="#how">איך זה עובד?</a>
+      <a class="btn ghost" href="#how">איך מזמינים?</a>
     </div>
     <ul class="chips" aria-label="בקצרה">
       <li>כ־45 דקות</li>
-      <!-- TODO: לאשר את טווח הגילים אחרי הפיילוט -->
-      <li>גילאי 3–8</li>
+      <!-- טווח הגילים: לאשר אחרי הפיילוט (גם בשאלות הנפוצות), ואז למחוק data-todo -->
+      <li data-todo>גילאי 3–8</li>
       <li>קים מביאה את הציוד</li>
       <li>פנים או חוץ מוצל</li>
     </ul>
@@ -299,7 +324,7 @@
         <div class="card"><div class="ico" aria-hidden="true">🏃</div><h3>משחקים עם קים</h3><p>״קים אומרת״, ״הפסל של קים״ ומשחקי תנועה — כולם בפנים.</p></div>
         <div class="card"><div class="ico" aria-hidden="true">🎲</div><h3>קוביית קים</h3><p>זורקים את הקובייה — ומה שיוצא, כל החדר עושה.</p></div>
         <div class="card"><div class="ico" aria-hidden="true">😂</div><h3>קים משתגעת</h3><p>היד, הרגל, הקול... הגוף של קים לא מקשיב לה — ורק הילדים יודעים לתקן.</p></div>
-        <div class="card"><div class="ico" aria-hidden="true">🤝</div><h3>המסלול של קים</h3><p>משחק צוות: כולנו נגד השיר, לא קבוצה נגד קבוצה.</p></div>
+        <div class="card"><div class="ico" aria-hidden="true">🤝</div><h3>המסלול של קים</h3><p>משחק צוות: כל שורה מעבירה כדור רך מיד ליד ומנסה לסיים לפני שהשיר נגמר. אין קבוצה שמפסידה.</p></div>
         <div class="card"><div class="ico" aria-hidden="true">💃</div><h3>הריקוד של קים</h3><p>ריקוד פשוט שהילדים יוצאים איתו הביתה — ואפשר לחזור עליו בגן.</p></div>
       </div>
     </div>
@@ -318,10 +343,10 @@
     <div class="wrap">
       <h2>למי זה מתאים?</h2>
       <div class="grid two">
-        <div class="card"><h3>🏫 גנים ומוסדות חינוך</h3><p>מופע שכולו השתתפות פעילה, עם תיאום מראש מול הצוות.</p></div>
-        <div class="card"><h3>☀️ קייטנות ומתנ״סים</h3><p>מופע בודד או חלק מתוכנית חופשה.</p></div>
-        <div class="card"><h3>🎂 ימי הולדת</h3><p>ילד/ת השמחה יכול/ה להיות ״קפטן/ית של קים״ — רק אם רוצה.</p></div>
-        <div class="card"><h3>👨‍👩‍👧 אירועי משפחות וקהילה</h3><p>גרסה פתוחה לילדים, ולהורים שרוצים להצטרף.</p></div>
+        <div class="card"><h3><span aria-hidden="true">🏫</span> גנים ומוסדות חינוך</h3><p>מופע שכולו השתתפות פעילה, עם תיאום מראש מול הצוות.</p></div>
+        <div class="card"><h3><span aria-hidden="true">☀️</span> קייטנות ומתנ״סים</h3><p>מופע בודד או חלק מתוכנית חופשה.</p></div>
+        <div class="card"><h3><span aria-hidden="true">🎂</span> ימי הולדת</h3><p>ילד/ת השמחה יכול/ה להיות ״קפטן/ית של קים״ — רק אם רוצה.</p></div>
+        <div class="card"><h3><span aria-hidden="true">👨‍👩‍👧</span> אירועי משפחות וקהילה</h3><p>גרסה פתוחה לילדים, ולהורים שרוצים להצטרף.</p></div>
       </div>
     </div>
   </section>
@@ -348,17 +373,17 @@
     </div>
   </section>
 
-  <!-- בטיחות ופרטיות -->
+  <!-- בטיחות ופרטיות. הנוסח תואם את docs/02-show-script.md (פרק 9) ואת docs/14-character-bible.md (פרק 8). משנים שם? לעדכן גם כאן -->
   <section id="safety">
     <div class="wrap">
       <h2>בטיחות <em>לפני הכל</em></h2>
       <ul class="points">
         <li><span><strong>לא מרימים ילדים ולא נושאים אותם.</strong> מגע רק כשהילד/ה בוחר/ת: כיף, אגרוף או נפנוף.</span></li>
-        <li><span><strong>קפיצות וריצות במקום</strong>, בחלל שנבדק לפני שמתחילים, ועם ציוד רך בלבד.</span></li>
+        <li><span><strong>קפיצות וריצות רק במקום</strong>, בחלל שנבדק לפני שמתחילים, ועם ציוד רך בלבד. היוצא מן הכלל: מסלול תנועה בקבוצה קטנה ובשטח פנוי, שבו הילדים עוברים אחד־אחד, בתור.</span></li>
         <li><span><strong>אף אחד לא מוכרח.</strong> מי שלא רוצה לעלות מקבל תפקיד שקט, ואפשר להצטרף בכל רגע.</span></li>
         <li><span><strong>מבוגר/ת מהמקום נשאר/ת בחדר</strong> לאורך כל המופע.</span></li>
         <li><span><strong>צילום ילדים לפרסום — רק באישור חתום של ההורים.</strong></span></li>
-        <!-- TODO: להוסיף רק אחרי שיש בפועל (ראו docs/13-legal-admin.md):
+        <!-- כשיש בפועל (docs/13-legal-admin.md), מוציאים מההערה את השורה המתאימה:
         <li><span><strong>אישור משטרה</strong> לעבודה עם קטינים.</span></li>
         <li><span><strong>ביטוח צד ג׳</strong> בתוקף.</span></li>
         <li><span><strong>הכשרה בעזרה ראשונה.</strong></span></li>
@@ -370,7 +395,7 @@
   <!-- על קים -->
   <section class="alt" id="kim">
     <div class="wrap about">
-      <!-- TODO: להחליף בתמונה של קים בתלבושת, בתנוחת "טה־דה!" — בלי ילדים בתמונה:
+      <!-- כשיש תמונה של קים בתלבושת, בתנוחת "טה־דה!" ובלי ילדים בתמונה: מחליפים את ה־div שמתחת בשורה הזאת:
            <img src="kim.jpg" alt="קים בתלבושת הצהובה־כתומה, ידיים פתוחות לצדדים" width="640" height="800"> -->
       <div class="photo-slot" data-todo>תמונה של קים בתלבושת<br>(בלי ילדים)</div>
       <div>
@@ -393,13 +418,13 @@
   </section>
   -->
 
-  <!-- המלצות: רק אמיתיות! -->
-  <section id="reviews">
+  <!-- המלצות: האזור מוסתר (hidden) עד שיש לפחות 2 המלצות אמיתיות, כל אחת עם אישור בכתב לפרסום
+       (docs/08-consent-template.md, נוסח ה׳). אסור להמציא המלצות.
+       כשיש: מוחקים את המילה hidden מהשורה הבאה, כותבים בכל כרטיס ציטוט מדויק, שם פרטי ותפקיד (למשל "גננת"),
+       מוחקים data-todo מכל כרטיס שמילאת, ומוחקים כרטיס שנשאר ריק. -->
+  <section id="reviews" hidden>
     <div class="wrap">
       <h2>מה אומרים <em>על קים</em></h2>
-      <p class="sub">כאן יופיעו המלצות של הורים, גננות ורכזות — אחרי המופעים הראשונים.</p>
-      <!-- TODO: להחליף כל כרטיס בהמלצה אמיתית בלבד: ציטוט מדויק, שם פרטי ותפקיד (למשל "גננת"),
-           ורק אחרי אישור בכתב לפרסום. אסור להמציא המלצות. אם אין עדיין — למחוק את שלושת הכרטיסים. -->
       <div class="grid three">
         <figure class="quote" data-todo>[מקום להמלצה אמיתית 1]<figcaption>שם פרטי · תפקיד</figcaption></figure>
         <figure class="quote" data-todo>[מקום להמלצה אמיתית 2]<figcaption>שם פרטי · תפקיד</figcaption></figure>
@@ -415,8 +440,8 @@
       <div class="faq">
         <details>
           <summary>לאיזה גיל המופע מתאים?</summary>
-          <!-- TODO: לאשר את הגילים אחרי הפיילוט -->
-          <div class="ans"><p>לילדים בגילאי 3–8 בערך — גן וכיתות א׳–ג׳. לכל גיל יש גרסה משלו: לגילאי 3–4 גרסה רכה וקצרה יותר, ולגילאי 7–8 אתגרים מתוחכמים יותר.</p></div>
+          <!-- הגילים: לאשר אחרי הפיילוט (גם בכותרת), ואז למחוק data-todo -->
+          <div class="ans"><p data-todo style="padding:8px 12px">לילדים בגילאי 3–8 בערך: גן וכיתות א׳–ב׳. לכל גיל יש גרסה משלו: לגילאי 3–4 גרסה רכה וקצרה יותר, ולגילאי 7–8 אתגרים מתוחכמים יותר.</p></div>
         </details>
         <details>
           <summary>כמה זמן זה נמשך?</summary>
@@ -424,8 +449,9 @@
         </details>
         <details>
           <summary>כמה ילדים יכולים להשתתף?</summary>
-          <!-- TODO: להוסיף מספר מקסימלי, לפי docs/06-show-offer.md -->
-          <div class="ans"><p>המופע מותאם לגודל הקבוצה, מקבוצה קטנה ועד קבוצה גדולה. בקבוצות גדולות מתאמים מראש את החלל ואת ההגברה, ומעל 60 ילדים מחלקים לשני מופעים נפרדים.</p></div>
+          <!-- 25 = המקסימום עד שיש לך מגבר קול (docs/06-show-offer.md). אחרי שאישרת את המספר: מוחקים data-todo.
+               אחרי שקנית מגבר: אפשר לשנות לפי הטבלה ב־docs/06-show-offer.md -->
+          <div class="ans"><p>עד <span data-todo>25</span> ילדים במופע אחד. בקבוצות גדולות יותר מתאמים מראש (הגברה וחלל), ומעל 60 ילדים מחלקים לשני מופעים.</p></div>
         </details>
         <details>
           <summary>כמה מקום צריך?</summary>
@@ -437,6 +463,9 @@
             <ul>
               <li>חלל פנוי מרהיטים וחפצים בשטח המשחק.</li>
               <li>מבוגר/ת מהצוות או מההורים בחדר לאורך כל המופע.</li>
+              <li>פינה סגורה להתארגנות של קים (חדר או שירותים, לא בחדר של הילדים).</li>
+              <li>הילדים לא אוכלים בזמן המופע (קופצים, ואוכל בפה מסוכן).</li>
+              <li>ספרו מראש על רגישויות (רעש, תנועה) ועל ילדים שאסור לצלם.</li>
               <li>בחוץ: צל מלא ומים לילדים.</li>
               <li>לא חובה: שקע חשמל ליד אזור המופע.</li>
             </ul>
@@ -481,38 +510,42 @@
   <div class="wrap">
     <h2>רוצים את קים אצלכם?</h2>
     <p class="tip">כתבו בהודעה: <strong>תאריך, עיר, סוג האירוע, גיל הילדים ומספר הילדים</strong> — וקים תחזור אליכם עם הצעה.</p>
-    <!-- הקישורים מתעדכנים אוטומטית מ־CONFIG בתחתית הקובץ. אין צורך לערוך אותם כאן. -->
+    <!-- הכתובות של הכפתורים נבנות אוטומטית מ־CONFIG בתחתית הקובץ. אין צורך לערוך אותן כאן.
+         אין לך אינסטגרם או מייל של העסק? מוחקים כאן את השורה של הכפתור המתאים. -->
     <div class="contact">
-      <a class="wa" data-contact="whatsapp" href="https://wa.me/972XXXXXXXXX"><span aria-hidden="true">💬</span> וואטסאפ</a>
-      <a data-contact="phone" href="tel:+972XXXXXXXXX"><span aria-hidden="true">📞</span> טלפון</a>
-      <a data-contact="email" href="mailto:hello@example.com"><span aria-hidden="true">📧</span> מייל</a>
-      <a data-contact="instagram" href="https://www.instagram.com/USERNAME/"><span aria-hidden="true">📸</span> אינסטגרם</a>
+      <a class="wa" data-contact="whatsapp"><span aria-hidden="true">💬</span> וואטסאפ</a>
+      <a data-contact="phone"><span aria-hidden="true">📞</span> טלפון</a>
+      <a data-contact="email"><span aria-hidden="true">📧</span> מייל</a>
+      <a data-contact="instagram"><span aria-hidden="true">📸</span> אינסטגרם</a>
     </div>
     <p class="fine">צילום ילדים לפרסום — רק באישור חתום של ההורים.</p>
-    <!-- TODO: לבדוק חובת נגישות והצהרת נגישות (docs/15-costume-and-logo.md פרק 10, docs/13-legal-admin.md). אם נדרש:
-    <p class="fine"><a href="accessibility.html" style="color:#FFC928">הצהרת נגישות</a></p>
-    -->
+    <!-- TODO: לבדוק חובת נגישות והצהרת נגישות (docs/15-costume-and-logo.md פרק 10, docs/13-legal-admin.md פרק 7.8).
+         אם צריך הצהרה: להוציא מההערה את השורה שבהערה הבאה ולהעלות את קובץ ההצהרה. בכל מקרה, אחרי הבדיקה מוחקים את ההערה הזאת. -->
+    <!-- <p class="fine"><a href="accessibility.html" style="color:#FFC928">הצהרת נגישות</a></p> -->
     <p class="fine">© <span id="year">2026</span> קים משחקים · עם קים — כולם משחקים!</p>
   </div>
 </footer>
 
 <div class="sticky-cta">
-  <a data-contact="whatsapp" href="https://wa.me/972XXXXXXXXX"><span aria-hidden="true">💬</span> להזמנת מופע בוואטסאפ</a>
+  <a data-contact="whatsapp"><span aria-hidden="true">💬</span> להזמנת מופע בוואטסאפ</a>
 </div>
 
 <script>
   /* =====================================================================
      CONFIG — המקום היחיד שצריך לערוך כדי לעדכן את כל פרטי הקשר בעמוד.
+     כל עוד נשאר כאן ערך לדוגמה (XXXX, example.com, USERNAME), הכפתור המתאים
+     מסומן באדום ולא לחיץ, כדי שאף אחד לא יגיע למספר או לחשבון שגוי.
+     אין לך אינסטגרם או מייל של העסק? מחקי את הכפתור המתאים בתחתית העמוד (בתוך <footer>).
      ===================================================================== */
   const CONFIG = {
-    // TODO: מספר וואטסאפ בפורמט בינלאומי: 972 ואחריו המספר בלי ה־0 שבהתחלה, בלי מקפים ובלי +.
-    //       למשל מספר שמתחיל ב־05X נכתב 9725X...
+    // מספר וואטסאפ בפורמט בינלאומי: 972 ואחריו המספר בלי ה־0 שבהתחלה, בלי מקפים ובלי +.
+    // למשל מספר שמתחיל ב־05X נכתב 9725X...
     whatsapp: "972XXXXXXXXX",
-    // TODO: מספר טלפון לחיוג, עם +972 ובלי ה־0 שבהתחלה.
+    // מספר טלפון לחיוג, עם +972 ובלי ה־0 שבהתחלה.
     phone: "+972XXXXXXXXX",
-    // TODO: כתובת המייל של העסק.
+    // כתובת המייל של העסק.
     email: "hello@example.com",
-    // TODO: שם המשתמש באינסטגרם, בלי @.
+    // שם המשתמש באינסטגרם, בלי @.
     instagram: "USERNAME",
     // ההודעה שנפתחת מוכנה בוואטסאפ. אפשר לשנות את הנוסח.
     whatsappMessage:
@@ -526,7 +559,7 @@
   };
 
   (function () {
-    const isPlaceholder = (v) => /X{4,}|example\.com|USERNAME/.test(v);
+    const isPlaceholder = (v) => !v || /X{4,}|example\.com|USERNAME/.test(v);
 
     const hrefs = {
       whatsapp: "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(CONFIG.whatsappMessage),
@@ -535,24 +568,54 @@
       instagram: "https://www.instagram.com/" + CONFIG.instagram + "/"
     };
 
+    // כפתורי קשר: ערך אמיתי = קישור פעיל. ערך לדוגמה = מסגרת אדומה, בלי קישור, ו״(להשלים)״
+    const contactTodos = new Set();
     document.querySelectorAll("[data-contact]").forEach((a) => {
       const key = a.getAttribute("data-contact");
-      if (hrefs[key]) a.href = hrefs[key];
+      if (!hrefs[key]) return;
+      if (isPlaceholder(CONFIG[key])) {
+        a.removeAttribute("href");
+        a.setAttribute("data-todo", "");
+        a.setAttribute("aria-disabled", "true");
+        a.appendChild(document.createTextNode(" (להשלים)"));
+        contactTodos.add(key);
+        return;
+      }
+      a.href = hrefs[key];
       if (key === "whatsapp" || key === "instagram") { a.target = "_blank"; a.rel = "noopener"; }
     });
 
     const year = document.getElementById("year");
     if (year) year.textContent = new Date().getFullYear();
 
-    // פס "טיוטה": סופר את כל מה שעוד לא הוחלף
-    const contactTodos = ["whatsapp", "phone", "email", "instagram"].filter((k) => isPlaceholder(CONFIG[k])).length;
-    const markedTodos = document.querySelectorAll("[data-todo]").length;
-    const total = contactTodos + markedTodos;
+    // פס "טיוטה": סופר את כל מה שעוד לא הוחלף או אושר
+    // 1) מסגרות אדומות שרואים בעמוד (לא כולל כפתורי קשר, ולא כולל אזור מוסתר)
+    const markedTodos = Array.from(document.querySelectorAll("[data-todo]"))
+      .filter((el) => !el.hasAttribute("data-contact") && !el.closest("[hidden]")).length;
+
+    // 2) הערות בקוד שמתחילות ב־TODO ונקודתיים (דברים שלא רואים בעמוד, כמו og:image והצהרת נגישות)
+    const codeTodos = [];
+    const walker = document.createTreeWalker(document, NodeFilter.SHOW_COMMENT);
+    while (walker.nextNode()) {
+      const text = walker.currentNode.nodeValue || "";
+      if (/TODO\s*:/.test(text)) codeTodos.push(text);
+    }
+
+    // 3) תמונה לשיתוף: חסרה או עם כתובת לדוגמה, וגם אין עליה הערה שכבר נספרה
+    const og = document.querySelector('meta[property="og:image"]');
+    const ogMissing = !og || /YOUR-DOMAIN/.test(og.getAttribute("content") || "");
+    const ogTodo = ogMissing && !codeTodos.some((t) => t.includes("og:image")) ? 1 : 0;
+
+    const inCode = codeTodos.length + ogTodo;
+    const total = markedTodos + contactTodos.size + inCode;
     if (total > 0) {
+      const parts = [];
+      if (markedTodos) parts.push("במסגרת אדומה: " + markedTodos);
+      if (contactTodos.size) parts.push("פרטי קשר: " + contactTodos.size);
+      if (inCode) parts.push("בתוך הקוד: " + inCode);
       const bar = document.getElementById("draftBar");
-      bar.textContent = "טיוטה: נשארו " + total + " דברים להחליף לפני העלאה" +
-        (contactTodos ? " (כולל " + contactTodos + " פרטי קשר ב־CONFIG)" : "") +
-        ". המקומות מסומנים במסגרת אדומה מקווקוות.";
+      bar.textContent = "טיוטה: " + (total === 1 ? "נשאר דבר אחד" : "נשארו " + total + " דברים") +
+        " לפני העלאה — " + parts.join(" · ") + ".";
       bar.classList.add("show");
     }
   })();
