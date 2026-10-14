@@ -56,10 +56,10 @@ header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; b
 .brandrow .pct small { font-family: var(--body); font-weight: 400; font-size: 12px; color: var(--muted); display: block; text-align: left; line-height: 1; }
 .track { display: flex; align-items: center; gap: 0; padding-block: 6px 10px; overflow-x: auto; scrollbar-width: none; }
 .track::-webkit-scrollbar { display: none; }
-.station { flex: none; width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--line); background: var(--surface); display: grid; place-items: center; font-family: var(--display); font-weight: 600; font-size: 15px; color: var(--muted); position: relative; padding: 0; }
+.station { flex: none; width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--line); background: var(--surface); display: grid; place-items: center; font-family: var(--display); font-weight: 600; font-size: 15px; color: var(--muted); position: relative; padding: 0; }
 .station.done { background: var(--ok); border-color: var(--ok); color: var(--surface); }
 .station.cur { background: var(--sun); border-color: var(--orange); color: var(--sun-ink); box-shadow: 0 0 0 4px var(--orange-soft); }
-.rail { flex: 1 1 14px; min-width: 10px; height: 4px; background: var(--line); border-radius: 2px; }
+.rail { flex: 1 1 14px; min-width: 5px; height: 4px; background: var(--line); border-radius: 2px; }
 .rail.done { background: var(--ok); }
 nav.tabs { display: flex; gap: 4px; padding-block: 0 8px; }
 nav.tabs button { flex: 1; border: 0; background: transparent; padding: 8px 4px; border-radius: 12px; font-weight: 500; color: var(--muted); }
@@ -358,7 +358,7 @@ function stepCard(s, isNext) {
   const stage = STAGES[s.si];
   const acts = new Set(state.acts[s.id] || []);
   const card = h("article", { class: "card", "aria-labelledby": "st-" + s.id });
-  card.append(h("div", { class: "eyebrow" }, "שלב " + LETTERS[s.si] + " · " + stage.title + " · צעד " + (s.idx + 1) + " מתוך " + stage.steps.length));
+  card.append(h("div", { class: "eyebrow" }, "צעד " + LETTERS[s.si] + (s.idx + 1) + " · שלב " + stage.title + " · " + (s.idx + 1) + " מתוך " + stage.steps.length));
   card.append(h("h2", { class: "step-title", id: "st-" + s.id }, s.title));
   const chips = h("div", { class: "chips" },
     s.time ? h("span", { class: "chip" }, "⏱ " + s.time) : null,
@@ -503,7 +503,7 @@ function renderRoutines() {
 }
 
 /* ---------- LIBRARY ---------- */
-function docTitle(path) { const m = /^#\s+(.+)$/m.exec(DOCS[path].md || ""); return m ? m[1].replace(/[*_`]/g, "") : path; }
+function docTitle(path) { return DOCS[path].title || path; }
 function resolveLink(base, href) {
   if (!href || /^(https?:|mailto:|tel:|#)/.test(href)) return null;
   const [p, hash] = href.split("#");
