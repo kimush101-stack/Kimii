@@ -1,147 +1,562 @@
 <!doctype html>
 <html lang="he" dir="rtl">
 <head>
+<!--
+  ============================================================
+  עמוד הנחיתה של "קים משחקים" — קובץ אחד, בלי ספריות.
+
+  לפני שמעלים לאוויר (הרשימה המלאה: docs/15-costume-and-logo.md, פרק 10):
+  [ ] פרטי קשר: לערוך רק את CONFIG בתחתית הקובץ (וואטסאפ, טלפון, מייל, אינסטגרם)
+  [ ] טווח גילים 3–8: לאשר אחרי הפיילוט (מופיע בכותרת ובשאלות הנפוצות)
+  [ ] אזורי פעילות (בשאלות הנפוצות)
+  [ ] תמונה של קים בתלבושת — בלי ילדים (באזור "נעים מאוד, אני קים")
+  [ ] פרטים אמיתיים על הניסיון של קים (באותו אזור) — רק מה שנכון
+  [ ] המלצות — רק אמיתיות, עם אישור בכתב. אם אין עדיין: למחוק את הכרטיסים המסומנים
+  [ ] og:image ו־og:url (למטה, בתוך <head>) — לתצוגה יפה כששולחים את הקישור בוואטסאפ
+  [ ] אחרי שיש לוגו סופי: להחליף את הלוגו הזמני (K בעיגול) בקובץ הלוגו
+
+  כל מקום שעוד צריך להחליף מסומן ב־data-todo, ומופיע בעמוד במסגרת אדומה מקווקוות.
+  כל עוד נשאר משהו להחליף — מופיע למעלה פס אדום "טיוטה". כשהכל מוחלף — הפס נעלם לבד.
+  ============================================================
+-->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>קים משחקים — עם קים, כולם משחקים!</title>
-<meta name="description" content="קים משחקים — מופע ילדים אינטראקטיבי של תנועה, אתגרים, צחוק וריקוד. לגנים, קייטנות, מתנ״סים וימי הולדת.">
+<meta name="description" content="קים משחקים — מופע משחק ותנועה אינטראקטיבי לילדים. אין צופים, יש רק שחקנים: קופצים, קופאים, צוחקים ורוקדים. לגנים, קייטנות, מתנ״סים, ימי הולדת ואירועי משפחות.">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#FFC928">
+
+<!-- תצוגה מקדימה כששולחים את הקישור בוואטסאפ / ברשתות -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="קים משחקים — עם קים, כולם משחקים!">
+<meta property="og:description" content="מופע משחק ותנועה אינטראקטיבי לילדים. אין צופים — יש רק שחקנים.">
+<!-- TODO: כשהאתר באוויר — להוסיף תמונה של קים (רוחב 1200 פיקסלים, בלי ילדים) ואת כתובת האתר:
+<meta property="og:image" content="https://YOUR-DOMAIN/kim-1200.jpg">
+<meta property="og:url" content="https://YOUR-DOMAIN/">
+-->
+
+<!-- אייקון זמני בלשונית הדפדפן: K כתומה על עיגול צהוב. להחליף אחרי שיש לוגו סופי -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23FFC928'/%3E%3Ctext x='32' y='46' font-family='Arial,sans-serif' font-weight='900' font-size='40' text-anchor='middle' fill='%232B2118'%3EK%3C/text%3E%3Ccircle cx='50' cy='16' r='7' fill='%23FF7A1A'/%3E%3C/svg%3E">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+
 <style>
+  /* צבעי המותג — מקור: docs/15-costume-and-logo.md, פרק 1 */
   :root {
     --yellow: #FFC928;
     --orange: #FF7A1A;
+    --orange-deep: #B34700;   /* כתום לטקסט על לבן/שמנת (ניגודיות 5.5:1) */
     --white: #FFFFFF;
-    --ink: #2B2118;
-    --soft: #FFF6DC;
+    --ink: #2B2118;           /* כל הטקסט */
+    --ink-soft: #5C4A3A;      /* טקסט משני */
+    --cream: #FFF6DC;
+    --todo: #B00020;
+    --radius: 20px;
   }
+
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
     margin: 0;
-    font-family: "Rubik", system-ui, sans-serif;
+    font-family: "Rubik", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
     color: var(--ink);
     background: var(--white);
-    line-height: 1.6;
+    padding-bottom: 76px; /* מקום לפס ההזמנה הקבוע בנייד */
   }
-  .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+  img { max-width: 100%; height: auto; display: block; }
+  a { color: var(--orange-deep); }
+  :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 6px; }
 
-  header.hero {
-    background: radial-gradient(circle at 80% 20%, var(--yellow) 0, var(--yellow) 30%, var(--orange) 100%);
-    color: var(--ink);
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+
+  .skip {
+    position: absolute; inset-inline-start: 8px; top: -60px; z-index: 50;
+    background: var(--ink); color: var(--yellow); padding: 10px 16px; border-radius: 999px;
+    font-weight: 600; text-decoration: none;
+  }
+  .skip:focus { top: 8px; }
+
+  /* ---------- פס "טיוטה" — מופיע רק אם נשארו דברים להחליף ---------- */
+  .draft-bar {
+    display: none; position: sticky; top: 0; z-index: 40;
+    background: var(--todo); color: var(--white);
+    font-size: 15px; font-weight: 600; text-align: center; padding: 8px 16px;
+  }
+  .draft-bar.show { display: block; }
+
+  /* סימון של מקום שצריך להחליף */
+  [data-todo] {
+    outline: 3px dashed var(--todo); outline-offset: 4px;
+    background: #FFF0F0; color: var(--todo); border-radius: 12px;
+  }
+
+  /* ---------- כותרת ראשית ---------- */
+  .hero {
+    background: radial-gradient(circle at 85% 15%, var(--yellow) 0, var(--yellow) 35%, var(--orange) 120%);
     text-align: center;
-    padding: 56px 0 72px;
-    position: relative;
+    padding: 40px 0 56px;
     overflow: hidden;
   }
   .logo {
-    width: 112px; height: 112px; margin: 0 auto 16px;
+    width: 104px; height: 104px; margin: 0 auto 14px;
     border-radius: 50%; background: var(--white);
     display: grid; place-items: center;
-    box-shadow: 0 8px 0 rgba(0,0,0,.12);
+    box-shadow: 0 7px 0 rgba(43,33,24,.14);
     transform: rotate(-8deg);
   }
-  .logo span { font-size: 72px; font-weight: 800; color: var(--orange); line-height: 1; }
-  .logo span::after { content: "●"; font-size: 22px; color: var(--yellow); margin-right: 2px; }
-  h1 { font-size: clamp(40px, 9vw, 72px); margin: 0; font-weight: 800; letter-spacing: -1px; }
-  .slogan { font-size: clamp(20px, 4.5vw, 28px); font-weight: 600; margin: 8px 0 28px; }
+  .logo span { font-size: 68px; font-weight: 800; color: var(--orange); line-height: 1; }
+  .logo span::after { content: "●"; font-size: 20px; color: var(--yellow); margin-inline-start: 2px; }
+  h1 { font-size: clamp(40px, 11vw, 76px); line-height: 1.05; margin: 0; font-weight: 800; letter-spacing: -1px; }
+  .slogan { font-size: clamp(21px, 5.5vw, 30px); font-weight: 600; margin: 10px 0 6px; }
+  .lead { font-size: clamp(17px, 4vw, 20px); max-width: 560px; margin: 0 auto 24px; }
+  .cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
   .btn {
-    display: inline-block; text-decoration: none; font-weight: 800; font-size: 18px;
-    padding: 14px 28px; border-radius: 999px; background: var(--ink); color: var(--yellow);
-    box-shadow: 0 5px 0 rgba(0,0,0,.25); transition: transform .1s;
+    display: inline-flex; align-items: center; gap: 8px;
+    text-decoration: none; font-weight: 800; font-size: 18px;
+    padding: 14px 26px; border-radius: 999px;
+    background: var(--ink); color: var(--yellow);
+    box-shadow: 0 5px 0 rgba(43,33,24,.25);
   }
-  .btn:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(0,0,0,.25); }
+  .btn.ghost { background: var(--white); color: var(--ink); }
+  .btn:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(43,33,24,.25); }
 
-  section { padding: 56px 0; }
-  section.alt { background: var(--soft); }
-  h2 { font-size: clamp(26px, 5vw, 36px); margin: 0 0 20px; font-weight: 800; }
-  h2 em { font-style: normal; color: var(--orange); }
+  .chips { list-style: none; padding: 0; margin: 26px 0 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .chips li {
+    background: rgba(255,255,255,.85); border-radius: 999px; padding: 6px 14px;
+    font-weight: 600; font-size: 15px;
+  }
 
-  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  /* ---------- אזורים ---------- */
+  section { padding: 48px 0; }
+  section.alt { background: var(--cream); }
+  h2 { font-size: clamp(27px, 6.5vw, 38px); line-height: 1.2; margin: 0 0 16px; font-weight: 800; }
+  h2 em { font-style: normal; color: var(--orange-deep); }
+  h3 { margin: 6px 0 4px; font-size: 20px; line-height: 1.3; }
+  p { margin: 0 0 12px; }
+  .sub { color: var(--ink-soft); }
+
+  .grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
   .card {
-    background: var(--white); border-radius: 20px; padding: 20px;
+    background: var(--white); border-radius: var(--radius); padding: 18px 20px;
     border: 3px solid var(--yellow);
   }
-  .card .ico { font-size: 34px; }
-  .card h3 { margin: 6px 0 4px; font-size: 20px; }
+  .card .ico { font-size: 32px; line-height: 1; }
   .card p { margin: 0; }
 
-  .call {
-    text-align: center; font-size: clamp(24px, 6vw, 40px); font-weight: 800;
+  .points { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px; }
+  .points li { display: flex; gap: 10px; align-items: flex-start; }
+  .points li::before { content: "★"; color: var(--orange-deep); font-weight: 800; flex: none; }
+
+  .call { text-align: center; padding: 40px 0; background: var(--ink); color: var(--cream); }
+  .call p { font-size: clamp(28px, 8vw, 46px); font-weight: 800; line-height: 1.2; margin: 0; }
+  .call .a { color: var(--yellow); display: block; }
+  .call small { display: block; margin-top: 10px; font-size: 16px; font-weight: 400; color: var(--cream); }
+
+  /* צעדי הזמנה 1-2-3 */
+  .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; counter-reset: step; }
+  .steps li {
+    counter-increment: step; position: relative;
+    background: var(--white); border-radius: var(--radius); padding: 18px 20px;
+    padding-inline-start: 76px; min-height: 84px;
+    border: 3px solid var(--yellow);
   }
-  .call .a { color: var(--orange); }
-  .call .b { display: block; }
+  .steps li::before {
+    content: counter(step);
+    position: absolute; inset-inline-start: 16px; top: 18px;
+    width: 46px; height: 46px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--orange); color: var(--ink); font-weight: 800; font-size: 24px;
+  }
+  .steps h3 { margin-top: 0; }
 
-  ul.facts { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
-  ul.facts li::before { content: "★ "; color: var(--orange); }
+  /* על קים */
+  .about { display: grid; gap: 20px; align-items: center; }
+  .photo-slot {
+    aspect-ratio: 4 / 5; max-width: 320px; width: 100%; margin: 0 auto;
+    display: grid; place-items: center; text-align: center; padding: 20px; font-weight: 600;
+  }
 
-  footer { background: var(--ink); color: var(--soft); text-align: center; padding: 40px 0; }
-  footer a { color: var(--yellow); }
-  .contact { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 16px 0; }
-  .contact a { background: var(--yellow); color: var(--ink); text-decoration: none; font-weight: 600; padding: 10px 18px; border-radius: 999px; }
-  small { opacity: .75; }
+  /* המלצות */
+  .quote { margin: 0; padding: 20px; font-weight: 600; }
+  .quote figcaption { margin-top: 8px; font-weight: 400; }
+
+  /* שאלות נפוצות */
+  .faq { display: grid; gap: 10px; }
+  .faq details { background: var(--white); border-radius: 16px; border: 2px solid var(--yellow); }
+  .faq summary {
+    cursor: pointer; list-style: none; padding: 14px 18px; font-weight: 600; font-size: 18px;
+    display: flex; justify-content: space-between; gap: 12px; align-items: center;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font-size: 26px; font-weight: 800; color: var(--orange-deep); line-height: 1; flex: none; }
+  .faq details[open] summary::after { content: "–"; }
+  .faq .ans { padding: 0 18px 16px; }
+  .faq ul { margin: 6px 0 0; padding-inline-start: 22px; }
+
+  /* הזמנה ותחתית */
+  footer { background: var(--ink); color: var(--cream); text-align: center; padding: 48px 0 32px; }
+  footer h2 { color: var(--yellow); }
+  .contact { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 18px 0; }
+  .contact a {
+    background: var(--yellow); color: var(--ink); text-decoration: none; font-weight: 800;
+    padding: 12px 20px; border-radius: 999px; min-width: 140px;
+  }
+  .contact a.wa { background: var(--orange); }
+  .tip { max-width: 520px; margin: 0 auto 14px; font-size: 16px; }
+  .fine { font-size: 14px; color: var(--cream); opacity: .9; margin: 6px 0 0; }
+
+  /* פס הזמנה קבוע בתחתית — רק בנייד */
+  .sticky-cta {
+    position: fixed; inset-inline: 0; bottom: 0; z-index: 30;
+    background: var(--white); border-top: 3px solid var(--yellow);
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    display: flex; justify-content: center;
+  }
+  .sticky-cta a {
+    flex: 1; max-width: 480px; text-align: center; text-decoration: none;
+    background: var(--orange); color: var(--ink); font-weight: 800; font-size: 18px;
+    padding: 12px; border-radius: 999px;
+  }
+
+  /* ---------- מסכים גדולים ---------- */
+  @media (min-width: 520px) {
+    .grid.two { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 720px) {
+    body { padding-bottom: 0; }
+    .sticky-cta { display: none; }
+    .hero { padding: 64px 0 80px; }
+    .logo { width: 120px; height: 120px; }
+    .logo span { font-size: 78px; }
+    section { padding: 72px 0; }
+    .grid.three { grid-template-columns: repeat(3, 1fr); }
+    .steps { grid-template-columns: repeat(3, 1fr); }
+    .steps li { padding-inline-start: 20px; padding-top: 80px; }
+    .about { grid-template-columns: 320px 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .btn:active { transform: none; }
+  }
 </style>
 </head>
 <body>
 
+<div class="draft-bar" id="draftBar" role="status"></div>
+<a class="skip" href="#main">דלגו לתוכן</a>
+
 <header class="hero">
   <div class="wrap">
+    <!-- לוגו זמני. אחרי שיש לוגו סופי: להחליף את ה־div הזה בתמונת הלוגו (<img src="logo.svg" alt="קים משחקים">) -->
     <div class="logo" aria-hidden="true"><span>K</span></div>
     <h1>קים משחקים</h1>
     <p class="slogan">עם קים — כולם משחקים!</p>
-    <a class="btn" href="#book">להזמנת מופע</a>
+    <p class="lead">מופע משחק ותנועה לילדים, שבו אין צופים — יש רק שחקנים. קופצים, קופאים, צוחקים ורוקדים עם קים.</p>
+    <div class="cta-row">
+      <a class="btn" href="#book">להזמנת מופע</a>
+      <a class="btn ghost" href="#how">איך זה עובד?</a>
+    </div>
+    <ul class="chips" aria-label="בקצרה">
+      <li>כ־45 דקות</li>
+      <!-- TODO: לאשר את טווח הגילים אחרי הפיילוט -->
+      <li>גילאי 3–8</li>
+      <li>קים מביאה את הציוד</li>
+      <li>פנים או חוץ מוצל</li>
+    </ul>
   </div>
 </header>
 
-<section>
-  <div class="wrap">
-    <h2>לא רק לצפות — <em>לשחק עם קים!</em></h2>
-    <p>קים היא כוכבת ילדים אנרגטית, מצחיקה וספורטיבית. במופע שלה אין צופים — יש רק שחקנים. 45 דקות של תנועה, אתגרים, צחוק וריקוד, שבהן כל ילד וילדה לוקחים חלק.</p>
-  </div>
-</section>
+<main id="main">
 
-<section class="alt">
-  <div class="wrap">
-    <h2>מה יש במופע?</h2>
-    <div class="grid">
-      <div class="card"><div class="ico">🏃</div><h3>משחקים עם קים</h3><p>משחקי תנועה, קפיצות ו״קים אומרת״ — כולם בפנים.</p></div>
-      <div class="card"><div class="ico">🎲</div><h3>אתגר קים</h3><p>מטילים את קוביית קים — וכולם מבצעים את האתגר.</p></div>
-      <div class="card"><div class="ico">😂</div><h3>קים משתגעת</h3><p>אלתור קומי שהילדים עוזרים ״לתקן״.</p></div>
-      <div class="card"><div class="ico">💃</div><h3>הריקוד של קים</h3><p>ריקוד פשוט שכולם יוצאים איתו הביתה.</p></div>
+  <!-- מה זה המופע -->
+  <section id="show">
+    <div class="wrap">
+      <h2>לא רק לצפות — <em>לשחק עם קים!</em></h2>
+      <p>קים היא כוכבת ילדים אנרגטית, מצחיקה וספורטיבית. היא מגיעה ״לבדוק אם הילדים יודעים לשחק״ — ובמשך כ־45 דקות הם מוכיחים לה שכן: קופצים, קופאים, צוחקים, מצילים אותה כשהיא ״משתגעת״, עובדים כצוות ורוקדים.</p>
+      <ul class="points">
+        <li><span><strong>אין צופים, יש שחקנים.</strong> בכל רגע רוב הילדים בתנועה.</span></li>
+        <li><span><strong>אין מפסידים.</strong> טעות היא ״אופס!״ — וממשיכים לשחק.</span></li>
+        <li><span><strong>מותאם לגיל ולקבוצה.</strong> גרסה רכה וקצרה לקטנטנים, ואתגרים מתוחכמים לגדולים.</span></li>
+        <li><span><strong>מתרגל תנועה, הקשבה ושיתוף פעולה</strong> — דרך משחק.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- מה יש במופע -->
+  <section class="alt" id="inside">
+    <div class="wrap">
+      <h2>מה יש במופע?</h2>
+      <div class="grid two three">
+        <div class="card"><div class="ico" aria-hidden="true">📣</div><h3>הקריאה הסודית</h3><p>״עם קים...״ — ״כולם משחקים!״. הקריאה שכולם יוצאים איתה הביתה.</p></div>
+        <div class="card"><div class="ico" aria-hidden="true">🏃</div><h3>משחקים עם קים</h3><p>״קים אומרת״, ״הפסל של קים״ ומשחקי תנועה — כולם בפנים.</p></div>
+        <div class="card"><div class="ico" aria-hidden="true">🎲</div><h3>קוביית קים</h3><p>זורקים את הקובייה — ומה שיוצא, כל החדר עושה.</p></div>
+        <div class="card"><div class="ico" aria-hidden="true">😂</div><h3>קים משתגעת</h3><p>היד, הרגל, הקול... הגוף של קים לא מקשיב לה — ורק הילדים יודעים לתקן.</p></div>
+        <div class="card"><div class="ico" aria-hidden="true">🤝</div><h3>המסלול של קים</h3><p>משחק צוות: כולנו נגד השיר, לא קבוצה נגד קבוצה.</p></div>
+        <div class="card"><div class="ico" aria-hidden="true">💃</div><h3>הריקוד של קים</h3><p>ריקוד פשוט שהילדים יוצאים איתו הביתה — ואפשר לחזור עליו בגן.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- קריאה וגובה -->
+  <div class="call" role="note">
+    <div class="wrap">
+      <p><span class="a">״עם קים...״</span>״כולם משחקים!״</p>
+      <small>הקריאה של השחקנים של קים</small>
     </div>
   </div>
-</section>
 
-<section>
-  <div class="wrap">
-    <p class="call"><span class="a">״עם קים...״</span><span class="b">״כולם משחקים!״</span></p>
-  </div>
-</section>
+  <!-- למי זה מתאים -->
+  <section id="who">
+    <div class="wrap">
+      <h2>למי זה מתאים?</h2>
+      <div class="grid two">
+        <div class="card"><h3>🏫 גנים ומוסדות חינוך</h3><p>מופע שכולו השתתפות פעילה, עם תיאום מראש מול הצוות.</p></div>
+        <div class="card"><h3>☀️ קייטנות ומתנ״סים</h3><p>מופע בודד או חלק מתוכנית חופשה.</p></div>
+        <div class="card"><h3>🎂 ימי הולדת</h3><p>ילד/ת השמחה יכול/ה להיות ״קפטן/ית של קים״ — רק אם רוצה.</p></div>
+        <div class="card"><h3>👨‍👩‍👧 אירועי משפחות וקהילה</h3><p>גרסה פתוחה לילדים, ולהורים שרוצים להצטרף.</p></div>
+      </div>
+    </div>
+  </section>
 
-<section class="alt">
-  <div class="wrap">
-    <h2>למי זה מתאים?</h2>
-    <ul class="facts">
-      <li>ימי הולדת — ילד/ת השמחה הופכים ל״קפטן של קים״</li>
-      <li>גנים ומוסדות חינוך</li>
-      <li>קייטנות ומתנ״סים</li>
-      <li>אירועי משפחות</li>
-    </ul>
-    <p><small>מופע מותאם לגיל ולקהל · קים מגיעה עם כל הציוד · ניסיון בהדרכת תנועה ומשחק לילדים ובתיאטרון</small></p>
-  </div>
-</section>
+  <!-- איך מזמינים -->
+  <section class="alt" id="how">
+    <div class="wrap">
+      <h2>איך מזמינים? <em>1, 2, 3</em></h2>
+      <ol class="steps">
+        <li>
+          <h3>שולחים הודעה</h3>
+          <p>בוואטסאפ או בטלפון: תאריך, עיר, סוג האירוע, גיל הילדים ומספר הילדים. ההודעה בוואטסאפ כבר מוכנה — רק למלא.</p>
+        </li>
+        <li>
+          <!-- לפי docs/12-booking-process.md (תחנה 6). אם התנאים משתנים שם — לעדכן גם כאן -->
+          <h3>מתאמים</h3>
+          <p>שיחה קצרה על המקום, הקבוצה והבטיחות, ואחריה הצעה מסודרת בכתב. התאריך נשמר אחרי אישור בכתב ומקדמה.</p>
+        </li>
+        <li>
+          <h3>משחקים!</h3>
+          <p>קים מגיעה כ־30 דקות לפני עם כל הציוד, בודקת את החלל — ומתחילים. עם קים... כולם משחקים!</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- בטיחות ופרטיות -->
+  <section id="safety">
+    <div class="wrap">
+      <h2>בטיחות <em>לפני הכל</em></h2>
+      <ul class="points">
+        <li><span><strong>לא מרימים ילדים ולא נושאים אותם.</strong> מגע רק כשהילד/ה בוחר/ת: כיף, אגרוף או נפנוף.</span></li>
+        <li><span><strong>קפיצות וריצות במקום</strong>, בחלל שנבדק לפני שמתחילים, ועם ציוד רך בלבד.</span></li>
+        <li><span><strong>אף אחד לא מוכרח.</strong> מי שלא רוצה לעלות מקבל תפקיד שקט, ואפשר להצטרף בכל רגע.</span></li>
+        <li><span><strong>מבוגר/ת מהמקום נשאר/ת בחדר</strong> לאורך כל המופע.</span></li>
+        <li><span><strong>צילום ילדים לפרסום — רק באישור חתום של ההורים.</strong></span></li>
+        <!-- TODO: להוסיף רק אחרי שיש בפועל (ראו docs/13-legal-admin.md):
+        <li><span><strong>אישור משטרה</strong> לעבודה עם קטינים.</span></li>
+        <li><span><strong>ביטוח צד ג׳</strong> בתוקף.</span></li>
+        <li><span><strong>הכשרה בעזרה ראשונה.</strong></span></li>
+        -->
+      </ul>
+    </div>
+  </section>
+
+  <!-- על קים -->
+  <section class="alt" id="kim">
+    <div class="wrap about">
+      <!-- TODO: להחליף בתמונה של קים בתלבושת, בתנוחת "טה־דה!" — בלי ילדים בתמונה:
+           <img src="kim.jpg" alt="קים בתלבושת הצהובה־כתומה, ידיים פתוחות לצדדים" width="640" height="800"> -->
+      <div class="photo-slot" data-todo>תמונה של קים בתלבושת<br>(בלי ילדים)</div>
+      <div>
+        <h2>נעים מאוד, <em>אני קים</em></h2>
+        <p>אני קים נידם. יש לי ניסיון מעשי בהדרכת תנועה ומשחק לילדים ובפעילות תיאטרון, ובניתי את ״קים משחקים״ סביב רעיון אחד: לא רק לצפות — לשחק.</p>
+        <p data-todo style="padding:10px 14px">להוסיף 1–2 משפטים אמיתיים: כמה שנים, איפה הדרכת, איזו הכשרה. רק מה שנכון.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- סרטון ההיכרות — להפעיל כשהסרטון באוויר (להסיר את סימני ההערה):
+  <section id="video">
+    <div class="wrap">
+      <h2>אתם יודעים לשחק?</h2>
+      <p class="sub">סרטון ההיכרות של קים — 30 שניות.</p>
+      <video controls playsinline preload="metadata" poster="intro-poster.jpg" style="width:100%;max-width:400px;border-radius:20px;margin:0 auto;display:block">
+        <source src="intro.mp4" type="video/mp4">
+      </video>
+    </div>
+  </section>
+  -->
+
+  <!-- המלצות: רק אמיתיות! -->
+  <section id="reviews">
+    <div class="wrap">
+      <h2>מה אומרים <em>על קים</em></h2>
+      <p class="sub">כאן יופיעו המלצות של הורים, גננות ורכזות — אחרי המופעים הראשונים.</p>
+      <!-- TODO: להחליף כל כרטיס בהמלצה אמיתית בלבד: ציטוט מדויק, שם פרטי ותפקיד (למשל "גננת"),
+           ורק אחרי אישור בכתב לפרסום. אסור להמציא המלצות. אם אין עדיין — למחוק את שלושת הכרטיסים. -->
+      <div class="grid three">
+        <figure class="quote" data-todo>[מקום להמלצה אמיתית 1]<figcaption>שם פרטי · תפקיד</figcaption></figure>
+        <figure class="quote" data-todo>[מקום להמלצה אמיתית 2]<figcaption>שם פרטי · תפקיד</figcaption></figure>
+        <figure class="quote" data-todo>[מקום להמלצה אמיתית 3]<figcaption>שם פרטי · תפקיד</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- שאלות נפוצות -->
+  <section class="alt" id="faq">
+    <div class="wrap">
+      <h2>שאלות נפוצות</h2>
+      <div class="faq">
+        <details>
+          <summary>לאיזה גיל המופע מתאים?</summary>
+          <!-- TODO: לאשר את הגילים אחרי הפיילוט -->
+          <div class="ans"><p>לילדים בגילאי 3–8 בערך — גן וכיתות א׳–ג׳. לכל גיל יש גרסה משלו: לגילאי 3–4 גרסה רכה וקצרה יותר, ולגילאי 7–8 אתגרים מתוחכמים יותר.</p></div>
+        </details>
+        <details>
+          <summary>כמה זמן זה נמשך?</summary>
+          <div class="ans"><p>כ־45 דקות. לגילאי 3–4 — כ־30 דקות. קים מגיעה כ־30 דקות לפני, כדי להתארגן ולבדוק את החלל.</p></div>
+        </details>
+        <details>
+          <summary>כמה ילדים יכולים להשתתף?</summary>
+          <!-- TODO: להוסיף מספר מקסימלי, לפי docs/06-show-offer.md -->
+          <div class="ans"><p>המופע מותאם לגודל הקבוצה, מקבוצה קטנה ועד קבוצה גדולה. בקבוצות גדולות מתאמים מראש את החלל ואת ההגברה, ומעל 60 ילדים מחלקים לשני מופעים נפרדים.</p></div>
+        </details>
+        <details>
+          <summary>כמה מקום צריך?</summary>
+          <div class="ans"><p>חלל פתוח, בפנים או בחוץ בצל מלא, עם רצפה יבשה ולא חלקה. כלל אצבע: כל ילד/ה צריך/ה מקום לפתוח ידיים לצדדים בלי לגעת בשכן. אין מקום כזה? יש גרסה בישיבה.</p></div>
+        </details>
+        <details>
+          <summary>מה צריך להכין?</summary>
+          <div class="ans">
+            <ul>
+              <li>חלל פנוי מרהיטים וחפצים בשטח המשחק.</li>
+              <li>מבוגר/ת מהצוות או מההורים בחדר לאורך כל המופע.</li>
+              <li>בחוץ: צל מלא ומים לילדים.</li>
+              <li>לא חובה: שקע חשמל ליד אזור המופע.</li>
+            </ul>
+            <p style="margin-top:8px">את הרמקול ואת כל ציוד המשחק קים מביאה.</p>
+          </div>
+        </details>
+        <details>
+          <summary>אפשר לעשות את המופע בחוץ?</summary>
+          <div class="ans"><p>כן — בצל מלא, עם הפסקות שתייה, ובאזור שאין ממנו גישה לכביש, לבריכה או לחניה.</p></div>
+        </details>
+        <details>
+          <summary>ומה אם ילד/ה לא רוצה להשתתף?</summary>
+          <div class="ans"><p>זה בסדר גמור. אף אחד לא מוכרח. מי שמתבייש/ת מקבל/ת תפקיד שקט, כמו ״מתופף/ת ראשי/ת״, ואפשר להצטרף בכל רגע.</p></div>
+        </details>
+        <details>
+          <summary>יש ילד/ה עם קושי בתנועה. זה מתאים?</summary>
+          <div class="ans"><p>לכל משחק יש גרסה בישיבה, שמוצגת לכל הילדים כגרסה מותרת. ספרו מראש, וקים תתאים את המשחקים.</p></div>
+        </details>
+        <details>
+          <summary>מצלמים את הילדים?</summary>
+          <div class="ans"><p>רק באישור חתום של ההורים. ילד/ה בלי אישור לא יופיע/תופיע עם פנים מזוהות בשום פרסום.</p></div>
+        </details>
+        <details>
+          <summary>מה מקבל/ת ילד/ת יום ההולדת?</summary>
+          <div class="ans"><p>אם רוצה — הוא/היא ״קפטן/ית של קים״: בוחר/ת תנועה, זורק/ת ראשון/ה את קוביית קים ומוביל/ה את הריקוד. מי שמעדיף/ה פחות במה מקבל/ת תפקיד שקט יותר.</p></div>
+        </details>
+        <details>
+          <summary>כמה זה עולה?</summary>
+          <div class="ans"><p>המחיר תלוי בסוג האירוע, במספר הילדים, במיקום ובמועד. שלחו פרטים — ותקבלו הצעה מסודרת.</p></div>
+        </details>
+        <details>
+          <summary>באילו אזורים?</summary>
+          <div class="ans"><p data-todo style="padding:8px 12px">להשלים: אזורי פעילות (למשל: מרכז, שרון...) ותוספת נסיעה, אם יש.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
 
 <footer id="book">
   <div class="wrap">
     <h2>רוצים את קים אצלכם?</h2>
-    <!-- TODO: להחליף בפרטי קשר אמיתיים לפני העלאה -->
+    <p class="tip">כתבו בהודעה: <strong>תאריך, עיר, סוג האירוע, גיל הילדים ומספר הילדים</strong> — וקים תחזור אליכם עם הצעה.</p>
+    <!-- הקישורים מתעדכנים אוטומטית מ־CONFIG בתחתית הקובץ. אין צורך לערוך אותם כאן. -->
     <div class="contact">
-      <a href="https://wa.me/972XXXXXXXXX">💬 וואטסאפ</a>
-      <a href="tel:+972XXXXXXXXX">📞 טלפון</a>
-      <a href="mailto:hello@example.com">📧 אימייל</a>
+      <a class="wa" data-contact="whatsapp" href="https://wa.me/972XXXXXXXXX"><span aria-hidden="true">💬</span> וואטסאפ</a>
+      <a data-contact="phone" href="tel:+972XXXXXXXXX"><span aria-hidden="true">📞</span> טלפון</a>
+      <a data-contact="email" href="mailto:hello@example.com"><span aria-hidden="true">📧</span> מייל</a>
+      <a data-contact="instagram" href="https://www.instagram.com/USERNAME/"><span aria-hidden="true">📸</span> אינסטגרם</a>
     </div>
-    <p><small>צילום ילדים לפרסום — רק באישור הורים. © קים משחקים</small></p>
+    <p class="fine">צילום ילדים לפרסום — רק באישור חתום של ההורים.</p>
+    <!-- TODO: לבדוק חובת נגישות והצהרת נגישות (docs/15-costume-and-logo.md פרק 10, docs/13-legal-admin.md). אם נדרש:
+    <p class="fine"><a href="accessibility.html" style="color:#FFC928">הצהרת נגישות</a></p>
+    -->
+    <p class="fine">© <span id="year">2026</span> קים משחקים · עם קים — כולם משחקים!</p>
   </div>
 </footer>
+
+<div class="sticky-cta">
+  <a data-contact="whatsapp" href="https://wa.me/972XXXXXXXXX"><span aria-hidden="true">💬</span> להזמנת מופע בוואטסאפ</a>
+</div>
+
+<script>
+  /* =====================================================================
+     CONFIG — המקום היחיד שצריך לערוך כדי לעדכן את כל פרטי הקשר בעמוד.
+     ===================================================================== */
+  const CONFIG = {
+    // TODO: מספר וואטסאפ בפורמט בינלאומי: 972 ואחריו המספר בלי ה־0 שבהתחלה, בלי מקפים ובלי +.
+    //       למשל מספר שמתחיל ב־05X נכתב 9725X...
+    whatsapp: "972XXXXXXXXX",
+    // TODO: מספר טלפון לחיוג, עם +972 ובלי ה־0 שבהתחלה.
+    phone: "+972XXXXXXXXX",
+    // TODO: כתובת המייל של העסק.
+    email: "hello@example.com",
+    // TODO: שם המשתמש באינסטגרם, בלי @.
+    instagram: "USERNAME",
+    // ההודעה שנפתחת מוכנה בוואטסאפ. אפשר לשנות את הנוסח.
+    whatsappMessage:
+      "היי קים! אשמח לפרטים על המופע של קים משחקים 🟡\n" +
+      "תאריך:\n" +
+      "עיר/יישוב:\n" +
+      "סוג האירוע (גן / קייטנה / מתנ״ס / יום הולדת / אחר):\n" +
+      "גיל הילדים:\n" +
+      "מספר ילדים בערך:",
+    emailSubject: "הזמנת מופע — קים משחקים"
+  };
+
+  (function () {
+    const isPlaceholder = (v) => /X{4,}|example\.com|USERNAME/.test(v);
+
+    const hrefs = {
+      whatsapp: "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(CONFIG.whatsappMessage),
+      phone: "tel:" + CONFIG.phone,
+      email: "mailto:" + CONFIG.email + "?subject=" + encodeURIComponent(CONFIG.emailSubject),
+      instagram: "https://www.instagram.com/" + CONFIG.instagram + "/"
+    };
+
+    document.querySelectorAll("[data-contact]").forEach((a) => {
+      const key = a.getAttribute("data-contact");
+      if (hrefs[key]) a.href = hrefs[key];
+      if (key === "whatsapp" || key === "instagram") { a.target = "_blank"; a.rel = "noopener"; }
+    });
+
+    const year = document.getElementById("year");
+    if (year) year.textContent = new Date().getFullYear();
+
+    // פס "טיוטה": סופר את כל מה שעוד לא הוחלף
+    const contactTodos = ["whatsapp", "phone", "email", "instagram"].filter((k) => isPlaceholder(CONFIG[k])).length;
+    const markedTodos = document.querySelectorAll("[data-todo]").length;
+    const total = contactTodos + markedTodos;
+    if (total > 0) {
+      const bar = document.getElementById("draftBar");
+      bar.textContent = "טיוטה: נשארו " + total + " דברים להחליף לפני העלאה" +
+        (contactTodos ? " (כולל " + contactTodos + " פרטי קשר ב־CONFIG)" : "") +
+        ". המקומות מסומנים במסגרת אדומה מקווקוות.";
+      bar.classList.add("show");
+    }
+  })();
+</script>
 
 </body>
 </html>
